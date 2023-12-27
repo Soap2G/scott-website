@@ -1,0 +1,140 @@
+/*Remove the highlight blue background color from mobile*/
+input,
+textarea,
+button,
+select,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.grecaptcha-badge { 
+  visibility: hidden;
+}
+
+:root {
+  /* Light theme colors */
+  --color-background: #ffffff;
+  --feel-sel-color: rgb(255, 68, 68);
+  --feel-color: #e63f34;
+  --selection-b-color: #242938;
+  --selection-color: #ffffff;
+  --color-footer: #e4e4e4;
+  --ref-color: #3b3b3b;
+  --a-color: #0ab836;
+  --color-text: #3b3b3b;
+  --submit-color: #ffffff;
+  --map-baseline: #242938;
+  --path-color: #1e80e8;
+  --circle-color: #FF6969;
+
+}
+
+body[data-theme='dark'] {
+  /* Dark theme colors */
+  --color-background: #030207;
+  --feel-color: rgb(255, 68, 68);
+  --feel-sel-color: #e63f34;
+  --selection-b-color: #ffffff;
+  --selection-color: #242938;
+  --color-footer: #242938;
+  --ref-color: #ffffff;
+  --a-color: #4dee75;
+  --color-text: #ffffff;
+  --submit-color: #434d6d;
+  --map-baseline: #EEEEEE;
+  --path-color: #FFD369;
+  --circle-color: #FB2576;
+}
+
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: background-color 1s ease, color 1s ease;
+}
+
+
+p {
+text-align: center;
+}
+
+a {
+  font-weight: bold;
+  text-decoration:none;
+  color: var(--a-color);
+    &:hover {
+      color: var(--ref-color);
+      transition: 200ms ease-in;
+  }
+}
+
+::-moz-selection {
+  color: var(--selection-color);
+  background: var(--selection-b-color);
+}
+
+::selection {
+  color: var(--selection-color);
+  background: var(--selection-b-color);
+}
+
+
+/*******************************************************/
+
+/*******************************************************/
+
+
+.theme-switch-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  /* align-items: center; */
+  /* justify-content: left; */
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  z-index: 1000;
+  padding-left: 2vw;
+  padding-top: 26px;
+  width: 48px;
+  height: 48px;
+  
+}
+
+.icon-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 1000px; /* this allows for the 3D effect */
+}
+
+.moon-icon, .sun-icon {
+  position: absolute;
+  /* width: 48px;
+  height: 48px; */
+  width: auto;
+  height: 50px;
+  backface-visibility: hidden; /* hide the back of the faces */
+  transition: transform 0.8s cubic-bezier(1,0,0,1); /* animate the transform property */
+}
+
+.flipped .moon-icon {
+  transform: rotateY(180deg); /* flip the moon icon */
+}
+
+.flipped .sun-icon {
+  transform: rotateY(0deg); /* reveal the sun icon */
+}
+
+.sun-icon {
+  transform: rotateY(180deg); /* initially hide the sun icon */
+}
+
+@media screen and (max-width: 500px) {
+
+  .theme-switch-button {
+    left: -2%;
+  }
+
+}
