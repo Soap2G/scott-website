@@ -8,8 +8,7 @@ import ThemeButton from './contexts/ThemeButton';
 import Footer from "./components/Footer.js";
 import Header from "./components/Header.js";
 import Transitions from "./components/Transitions";
-import BlogList from './components/blog/BlogList';
-import BlogPostPage from './components/blog/BlogPostPage';
+import ImmobiliPostPage from './components/immobili/ImmobiliPostPage';
 import { useLocation } from 'react-router-dom';
 import { AnimatePresence } from "framer-motion";
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
@@ -29,11 +28,11 @@ function App() {
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
 
     // Toggle theme and store in localStorage
-    // const toggleTheme = () => {
-    //     const newTheme = theme === "light" ? "dark" : "light";
-    //     setTheme(newTheme);
-    //     localStorage.setItem('theme', newTheme);
-    // };
+    const toggleTheme = () => {
+        const newTheme = theme === "light" ? "dark" : "light";
+        setTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+    };
 
     // Apply theme to body
     useEffect(() => {
@@ -61,7 +60,7 @@ function App() {
                 <main ref={ref}>
                     <Header />
                     <div className={`theme-${theme}`}>
-                        {/* <ThemeButton onClick={toggleTheme} flipped={theme === 'dark'} /> */}
+                        <ThemeButton onClick={toggleTheme} flipped={theme === 'dark'} />
                             <AnimatePresence 
                             initial={false}
                             mode='wait'
@@ -89,24 +88,13 @@ function App() {
                                             
                                         </>
                                     } />
-                                    <Route 
-                                    exact
-                                    path="/blog" 
-                                    element={
-                                        <>
-                                            <Transitions>
-                                                <BlogList />
-                                                <Footer />
-                                            </Transitions>
-                                        </>
-                                    } />
                                     <Route
                                     exact
-                                    path="/blog/:slug" 
+                                    path="/immobili/:slug" 
                                     element={
                                         <>
                                             <Transitions>
-                                            <BlogPostPage />
+                                            <ImmobiliPostPage />
                                             <Footer />
                                             </Transitions>
                                         </>

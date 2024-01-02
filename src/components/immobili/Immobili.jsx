@@ -1,6 +1,7 @@
 import React from "react";
 import "./immobili.css";
 import listingsData from '../../data/ListingsData';
+import { Link } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Immobili = () => {
@@ -23,10 +24,10 @@ const Immobili = () => {
             {/* <div className="row"> */}
               {listingsData.map((listing, index) => {
                 // Format the price inside the map function
-                const formattedPrice = listing.price.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+                // const formattedPrice = listing.price.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 
                 return (
-                  <div className="my-col">
+                  <div className="my-col" key={index}>
                     <div className="listing">
                       <div className="listing-img" style={{ background: `url("${listing.image}") no-repeat center center` }} key={index}>
                         <span className="address">{listing.address}</span>
@@ -45,13 +46,16 @@ const Immobili = () => {
                               </div>
                               <div className="bedrooms">
                                 <i className="fa fa-bed"></i>
-                                <span>{listing.rooms} bedr.</span>
+                                <span>{listing.rooms} locali</span>
                               </div>
                             </div>
                             <div className="view-btn">
-                              Details
+                            <Link 
+                              to={`/immobili/${listing.city}`}>
+                              Dettagli
+                            </Link>
                             </div>
-                            <span className="post-date">Posted: {listing.postDate}</span>
+                            <span className="post-date">Registrato il: {listing.postDate}</span>
                           </div>
                         </div>
                         {/* <div className="bottom-info">

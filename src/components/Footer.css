@@ -1,12 +1,33 @@
 .footer-div{
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center; 
-    gap: 8px; 
-    vertical-align: middle;
-    font-size: 1.5rem;
-    color: var(--color-text);
+    max-width: 1000px;
+    margin: 0 auto;
     /* margin-bottom: 0.4em; */
+}
+
+.footer-row {
+    display: flex;
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(185px, 1fr)
+    );
+    grid-gap: 5em;
+    width: 100%;
+
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.footer-heading {
+    font-size: 24px;
+    margin-bottom: 0.3em;
+    font-weight: bold;
 }
 
 .footer-case{
@@ -15,9 +36,9 @@
     align-items: center; 
     gap: 8px; 
     vertical-align: middle;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     color: var(--color-text);
-    margin-bottom: 0.2em;
+    margin-top: 3em;
 }
 
 .footer-link{
@@ -33,10 +54,11 @@
 }
 
 .box{
+    display: flex;
     left: 0;
     bottom: 0;
     padding-top: 2.5%;
-    padding-bottom: 2.5%;
+    padding-bottom: 1%;
     background: var(--color-footer);
     /* position: absolute; */
     width: 100%;

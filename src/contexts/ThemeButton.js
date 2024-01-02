@@ -1,6 +1,6 @@
 import React from 'react';
-import DarkIcon from '../assets/dark.webp';
-import LightIcon from '../assets/light.webp';
+import DarkIcon from '../assets/icons8-moon-48.png';
+import LightIcon from '../assets/icons8-sun-48.png';
 
 const ThemeButton = ({ onClick, flipped }) => {
     return (

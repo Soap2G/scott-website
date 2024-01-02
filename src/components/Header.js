@@ -25,7 +25,7 @@ const Header = () => {
         >
           home
         </Link>
-        |
+        {/* |
         <Link
           className="nav-link active"
           style={{ 
@@ -34,7 +34,7 @@ const Header = () => {
           to="/blog"
         >
           immobili
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

@@ -111,10 +111,8 @@ a {
 
 .moon-icon, .sun-icon {
   position: absolute;
-  /* width: 48px;
-  height: 48px; */
   width: auto;
-  height: 50px;
+  height: 24px;
   backface-visibility: hidden; /* hide the back of the faces */
   transition: transform 0.8s cubic-bezier(1,0,0,1); /* animate the transform property */
 }
