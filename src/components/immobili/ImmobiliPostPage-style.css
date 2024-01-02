@@ -1,22 +1,25 @@
-
-.markdown-content{
-    min-height: 70vh;
-    margin: 5em;
-}
-
-.markdown-content h1 {
-    font-size: 4rem;
+/* .post-page-container {
     display: flex;
+    align-items: center;
     justify-content: center;
-}
+} */
 
-.markdown-content li {
-    font-size: 3rem;
-    line-height: 1.6;
-}
 
-.markdown-content a {
-    color: red;
-}
-
+.video-background {
+    position: relative;
+    padding-bottom: 46%;
+    width: 100vw;
+    overflow: hidden;
+  }
+  
+  .video-foreground,
+  .video-foreground iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50vw;
+    height: 50vh;
+    transform: translate(-50%, -50%) scale(1.5); 
+    pointer-events: none;
+  }
 /* Add more specific styles for other elements like lists, blockquotes, code, etc. */

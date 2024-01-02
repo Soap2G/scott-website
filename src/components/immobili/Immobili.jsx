@@ -29,7 +29,7 @@ const Immobili = () => {
                 return (
                   <div className="my-col" key={index}>
                     <div className="listing">
-                      <div className="listing-img" style={{ background: `url("${listing.image}") no-repeat center center` }} key={index}>
+                      <div className="listing-img" style={{ background: `url("${process.env.PUBLIC_URL}/photos/${listing.image}") no-repeat center center` }} key={index}>
                         <span className="address">{listing.address}</span>
                         <div className="details">
                           {/* <div className="my-col">
@@ -51,7 +51,8 @@ const Immobili = () => {
                             </div>
                             <div className="view-btn">
                             <Link 
-                              to={`/immobili/${listing.city}`}>
+                              // eslint-disable-next-line
+                              to={`/immobili/${listing.address.toLowerCase().replace(/[\.,]/g, '').replace(/\s/g, '-')}`}>
                               Dettagli
                             </Link>
                             </div>
