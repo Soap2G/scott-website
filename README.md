@@ -1,9 +1,7 @@
-# Giocotta [![pages-build-deployment](https://github.com/Soap2G/giocotta/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/Soap2G/giocotta/actions/workflows/pages/pages-build-deployment) [![Netlify Status](https://api.netlify.com/api/v1/badges/4ed49e47-d23c-4e18-a227-3fa4a77e7f63/deploy-status)](https://app.netlify.com/sites/giocotta/deploys) [![Produce Menus](https://github.com/Soap2G/giocotta/actions/workflows/build_menus.yml/badge.svg)](https://github.com/Soap2G/giocotta/actions/workflows/build_menus.yml)
+# Scott SRL website [![pages-build-deployment](https://github.com/Soap2G/scott-website/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/Soap2G/scott-website/actions/workflows/pages/pages-build-deployment)
 
-https://soap2g.github.io/giocotta
+https://soap2g.github.io/scott-website
 
-## A very good excuse to build a simple website in React
-You don't normally need to get married to get started in react, but this was it for me; below there are some guidelines if you want to experiment on this project :D
 
 ### Getting the code
 To download the repository, execute
