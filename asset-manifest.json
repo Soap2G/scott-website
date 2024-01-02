@@ -1,18 +1,15 @@
 {
   "files": {
-    "main.css": "./static/css/main.f3253c8a.css",
-    "main.js": "./static/js/main.4549f0fc.js",
+    "main.css": "./static/css/main.e3aec062.css",
+    "main.js": "./static/js/main.ed525e55.js",
     "static/js/787.ced5ec0d.chunk.js": "./static/js/787.ced5ec0d.chunk.js",
-    "static/media/Sad-Pablo-Escobar.webp": "./static/media/Sad-Pablo-Escobar.eaa4f4708b31ec9ad96d.webp",
-    "static/media/light.webp": "./static/media/light.129a792598f3da375180.webp",
-    "static/media/dark.webp": "./static/media/dark.b903215f8c7f05fc521a.webp",
     "index.html": "./index.html",
-    "main.f3253c8a.css.map": "./static/css/main.f3253c8a.css.map",
-    "main.4549f0fc.js.map": "./static/js/main.4549f0fc.js.map",
+    "main.e3aec062.css.map": "./static/css/main.e3aec062.css.map",
+    "main.ed525e55.js.map": "./static/js/main.ed525e55.js.map",
     "787.ced5ec0d.chunk.js.map": "./static/js/787.ced5ec0d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f3253c8a.css",
-    "static/js/main.4549f0fc.js"
+    "static/css/main.e3aec062.css",
+    "static/js/main.ed525e55.js"
   ]
 }
