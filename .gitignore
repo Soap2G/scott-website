@@ -23,7 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 *.old
-src/posts/posts.jsx
+# src/posts/posts.jsx
 
 # Local Netlify folder
 .netlify
