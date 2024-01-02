@@ -1,98 +1,278 @@
+*, html, body {
+    box-sizing: border-box;
+  }
+  *:focus {
+    outline: none;
+  }
 
-.cerimony-section{
+.row::after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+.listings-container {
+  padding: 3em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.my-col, .my-col-9 {
+  flex: 0 0 21%;  /* Each column takes up one-third of the container */
+  max-width: 21%;
+  margin: 0.2em;
+}
+
+@media screen and (max-width: 1120px) {
+  .my-col, .my-col-9 {
+    flex: 0 0 30%;   /* Below 768px, each column takes full width */
+    max-width: 30%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .my-col, .my-col-9 {
+    flex: 0 0 100%;   /* Below 768px, each column takes full width */
+    max-width: 100%;
+  }
+}
+
+#content-area {
+    overflow: auto;
+    width: 100%;
+    min-height: 100vh;
+  }
+#listings {
+width: 100%;
+/* float: left; */
+display: inline-block;
+padding: 15px;
+background: #fffeff;
+}
+#listings .search-area input[type="text"] {
+width: 70%;
+background: transparent;
+font-size: 2rem;
+border: none;
+border-bottom: 1px solid #828d9d;
+margin-bottom: 20px;
+font-weight: 300;
+color: #c8c8c8;
+}
+#listings .sortby-area {
+margin-bottom: 20px;
+}
+#listings .sortby-area .results {
+color: #828d9d;
+font-size: 0.8rem;
+display: inline-block;
+}
+#listings .sortby-area .sort-options {
+float: right;
+}
+#listings .sortby-area .sort-options select {
+color: #828d9d;
+font-size: 0.9rem;
+font-weight: 300;
+border: 1px solid #c8c8c8;
+background: transparent;
+padding: 20px;
+display: inline-block;
+margin-right: 15px;
+vertical-align: top;
+}
+#listings .sortby-area .sort-options .view {
+display: inline-block;
+}
+#listings .sortby-area .sort-options .view .fa {
+margin-right: 15px;
+font-size: 1.5rem;
+color: darkgrey;
+}
+
+#listings .listings-results .listing {
+background: #fff;
+border-radius: 5px;
+margin-bottom: 60px;
+-webkit-box-shadow: 0px 9px 54px -4px rgba(224, 224, 224, 1);
+-moz-box-shadow: 0px 9px 54px -4px rgba(224, 224, 224, 1);
+box-shadow: 0px 9px 54px -4px rgba(224, 224, 224, 1);
+}
+#listings .listings-results .listing-img {
+color: #fff;
+padding: 15px;
+position: relative;
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+min-height: 200px;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}
+
+.listing-img {
+    color: #fff;
+    padding: 15px;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 5em;
-    /* height: 100vh; */
-    /* padding: 1.5rem; */
-    flex-direction: column;
-    /* overflow: hidden; */
-    
-}   
-
-.cerimony-title {
-    font-size: 3rem;
-    align-items: center;
-    margin: 0px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-height: 200px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
-
-.case {
-    font-size: 1.3rem;
-    font-weight: 400;
-    margin-top: -1rem;
-    padding-left: 1rem;
-    text-align: center;
-    line-height: 2rem;
+#listings .listings-results .listing-img:hover .details {
+opacity: 1;
 }
-
-.address{
-    font-size: 1.1rem;
-    text-align: center;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    margin-bottom: 2rem;
-    line-height: 2rem;
-
+#listings .listings-results .listing-img:hover .address {
+opacity: 0;
 }
-
-.cerimony {
-    font-size: 3rem;
-    align-items: center;
-    margin-bottom: -10rem;
+#listings .listings-results .listing-img .address {
+font-size: 1rem;
+text-transform: capitalize;
+position: absolute;
+bottom: 20px;
+opacity: 1;
+transition: all 0.4s ease-in-out;
+text-shadow: 0px 1px 4px rgba(91, 91, 91, 1);
+background-color:var(--selection-b-color);
+padding: 5px 10px;
+border-radius: 5px;
 }
-
-  /* Added This */
-.op-class-cerimony{  
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 1;
-    width: 50%;
-    height: 30%;
+#listings .listings-results .listing-img .details {
+transition: all 0.4s ease-in-out;
+opacity: 0;
+padding: 5px;
+position: absolute;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+-moz-border-radius-topright: 5px;
+border-radius: 5px;
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7711f4+0,c204f2+100 */
+background: rgba(119, 17, 244, .8);
+/* Old browsers */
+background: -moz-linear-gradient(-45deg, rgba(119, 17, 244, .8) 0%, rgba(194, 4, 242, .8) 100%);
+/* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg, rgba(119, 17, 244, .8) 0%, rgba(194, 4, 242, .8) 100%);
+/* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg, rgba(119, 17, 244, .8) 0%, rgba(194, 4, 242, .8) 100%);
+/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7711f4', endColorstr='#c204f2',GradientType=1);
+/* IE6-9 fallback on horizontal gradient */
 }
-
-.fadeIn {
-    opacity: 1;
-    transition: opacity 4s ;
+#listings .listings-results .listing-img .details .user-img-box {
+width: 35px;
+height: 35px;
+border-radius: 50%;
+border: 2px solid #fff;
+display: inline-block;
 }
-
-@media screen and (max-width: 850px) {
-
-    .cerimony-title {
-        font-size: 2rem;
-    }
-
-    .case {
-        margin-left: 0.3em;
-        margin-right: 0.3em;
-    }
-
-    .op-class-cerimony{  
-        opacity: 1;
-        width: 100%;
-        height: 100%;
-        margin-top: 0em;
-    }
-
-  }
-
-
-  @media screen and (max-width: 500px) {
-
-    .cerimony-section{
-        padding: 0.5rem;
-        
-    }   
-
-    .cerimony {
-        font-size: 2rem;
-    }
-
-    .op-class-cerimony{  
-        margin-top: -3em;
-        height: 30em;
-    }
-
-  }
+#listings .listings-results .listing-img .details .user-img-long {
+width: 35px;
+height: 35px;
+border-radius: 50%;
+border: 2px solid #fff;
+display: inline-block;
+margin-left: 30%;
+}
+#listings .listings-results .listing-img .details .user-details {
+vertical-align: top;
+display: inline-block;
+height: 20px;
+}
+#listings .listings-results .listing-img .details .user-details .user-name {
+font-weight: 300;
+font-size: 0.9rem;
+display: block;
+color: rgba(255, 255, 255, 1);
+margin-top: 3px;
+margin-bottom: 5px;
+}
+#listings .listings-results .listing-img .details .listing-details {
+margin-top: 30px;
+margin-bottom: 10px;
+}
+#listings .listings-results .listing-img .details .listing-details .fa {
+display: inline-block;
+font-size: 18px;
+margin-right: 15px;
+}
+#listings .listings-results .listing-img .details .listing-details span {
+display: inline-block;
+font-weight: 300;
+font-size: 0.8rem;
+vertical-align: top;
+position: relative;
+top: 3px;
+}
+#listings .listings-results .listing-img .details .listing-details .floor-space {
+margin-bottom: 1px;
+}
+#listings .listings-results .post-date {
+font-size: 0.6rem;
+display: block;
+color: rgba(255, 255, 255, .7);
+padding-top: 10px;
+}
+#listings .listings-results .bottom-info {
+  position: inherit;
+  padding: 20px 15px;
+}
+#listings .listings-results .bottom-info .price {
+font-size: 1rem;
+display: block;
+margin-bottom: 10px;
+color: #828d9d;
+}
+#listings .listings-results .bottom-info .location {
+font-size: 1rem;
+display: block;
+color: #c8c8c8;
+}
+.view-btn {
+background: #fffeff;
+color: #828d9d;
+padding: 8px;
+font-size: 0.9rem;
+border-radius: 5px;
+text-align: center;
+max-width: 150px;
+transition: background 0.3s ease-in-out;
+}
+.view-btn:hover {
+background: #021847;
+color: #fff;
+cursor: pointer;
+}
+#pagination {
+width: 100%;
+display: block;
+margin-top: 70px;
+}
+#pagination .pages {
+margin: 0 auto;
+display: inline-block;
+background: #fff;
+-webkit-box-shadow: 0px 9px 54px -4px rgba(224, 224, 224, 1);
+-moz-box-shadow: 0px 9px 54px -4px rgba(224, 224, 224, 1);
+box-shadow: 0px 9px 54px -4px rgba(224, 224, 224, 1);
+}
+#pagination .pages li {
+padding: 20px 30px;
+display: inline-block;
+}
+#pagination .pages li.active, #pagination .pages li:hover {
+color: #fff;
+font-weight: 700;
+background: #639;
+cursor: pointer;
+}

@@ -1,60 +1,73 @@
 import React from "react";
 import "./immobili.css";
+import listingsData from '../../data/ListingsData';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Immobili = () => {
-  const menuItem = [
-    {
-      text: "title",
-      subtitle: "subtitle",
-      image:
-        "https://images.pexels.com/photos/4393021/pexels-photo-4393021.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-    {
-      text: "title",
-      subtitle: "subtitle",
-      image:
-        "https://images.pexels.com/photos/17216084/pexels-photo-17216084/free-photo-of-nourriture-tasse-fruit-panier.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-    {
-      text: "title",
-      subtitle: "subtitle",
-      image:
-        "https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-    {
-      text: "title",
-      subtitle: "subtitle",
-      image:
-        "https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-  ];
+  // Using the imported listingsData directly
+  if (listingsData === undefined || listingsData.length === 0) {
+    return "Sorry your filter did not match any listing";
+  }
 
   return (
-    <div className="max-w-[1640px] mx-auto p-4 py-12 grid md:grid-cols-3 gap-6">
-      {/* Card */}
+    <section id='listings'>
+      <div className="message-title">
+        <center>
+          <h1 >
+            Immobili
+          </h1>
+        </center>
+      </div>
+      <section className="listings-results">
+          <div className="listings-container">
+            {/* <div className="row"> */}
+              {listingsData.map((listing, index) => {
+                // Format the price inside the map function
+                const formattedPrice = listing.price.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 
-      {menuItem.map(({ text, subtitle, image }, index) => {
-        return (
-          <div key={index} className="rounded-xl relative">
-            {/* Overlay */}
-            <div className="absolute w-full h-full bg-black/50 rounded-xl text-white">
-              <p className="font-bold text-2xl px-2 pt-4">{text} </p>
-              <p className="px-2">{subtitle}</p>
-              <button className="border rounded-xl px-5 py-1 border-white bg-white text-black hover:bg-black/50 hover:text-white border-none mx-2 absolute bottom-4">
-                order
-              </button>
+                return (
+                  <div className="my-col">
+                    <div className="listing">
+                      <div className="listing-img" style={{ background: `url("${listing.image}") no-repeat center center` }} key={index}>
+                        <span className="address">{listing.address}</span>
+                        <div className="details">
+                          {/* <div className="my-col">
+                            <img className="user-img-box" src={listing.userImg} alt="" />
+                          </div> */}
+                          <div className="my-col-9">
+                            <div className="user-details">
+                              <span className="user-name">{listing.user}</span>
+                            </div>
+                            <div className="listing-details">
+                              <div className="floor-space">
+                                <i className="fa fa-square-o"></i>
+                                <span>{listing.floorSpace} m&sup2;</span>
+                              </div>
+                              <div className="bedrooms">
+                                <i className="fa fa-bed"></i>
+                                <span>{listing.rooms} bedr.</span>
+                              </div>
+                            </div>
+                            <div className="view-btn">
+                              Details
+                            </div>
+                            <span className="post-date">Posted: {listing.postDate}</span>
+                          </div>
+                        </div>
+                        {/* <div className="bottom-info">
+                          <span className="price">${formattedPrice}</span>
+                          <span className="location"><i className="fa fa-map-marker"></i> {listing.city}, {listing.state}</span>
+                        </div> */}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-            <img
-              className="max-h-[160px]  md:max-h-[200px] w-full object-cover rounded-xl"
-              src={image}
-              alt="/"
-            />
-          </div>
-        );
-      })}
-    </div>
+          {/* </div> */}
+        </section>
+    </section>
   );
-
 };
 
 export default Immobili;

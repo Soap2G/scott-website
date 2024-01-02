@@ -3,8 +3,6 @@ import { ParallaxProvider } from 'react-scroll-parallax';
 import { Routes, Route } from 'react-router-dom';
 import Introduction from './components/intro/Introduction';
 import Immobili from './components/immobili/Immobili';
-import Fiesta from './components/fiesta/Fiesta';
-import Lista from './components/lista/lista';
 import { Message } from './components/rsvp/Message';
 import ThemeButton from './contexts/ThemeButton';
 import Footer from "./components/Footer.js";
@@ -19,6 +17,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
 
 
+
 import './App.css';
 
 function App() {
@@ -27,14 +26,14 @@ function App() {
     const location = useLocation();
 
     // Initialize theme based on localStorage or default to 'light'
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
 
     // Toggle theme and store in localStorage
-    const toggleTheme = () => {
-        const newTheme = theme === "light" ? "dark" : "light";
-        setTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
-    };
+    // const toggleTheme = () => {
+    //     const newTheme = theme === "light" ? "dark" : "light";
+    //     setTheme(newTheme);
+    //     localStorage.setItem('theme', newTheme);
+    // };
 
     // Apply theme to body
     useEffect(() => {
@@ -62,7 +61,7 @@ function App() {
                 <main ref={ref}>
                     <Header />
                     <div className={`theme-${theme}`}>
-                        <ThemeButton onClick={toggleTheme} flipped={theme === 'dark'} />
+                        {/* <ThemeButton onClick={toggleTheme} flipped={theme === 'dark'} /> */}
                             <AnimatePresence 
                             initial={false}
                             mode='wait'
@@ -79,8 +78,6 @@ function App() {
                                             <Transitions>
                                                 <Introduction />
                                                 <Immobili />
-                                                <Fiesta />
-                                                <Lista />
                                                 <GoogleReCaptchaProvider 
                                                     reCaptchaKey="6LfmHDEpAAAAALxj7qIMB5DwWa2HOdi7ABKfIs9V"
                                                     onLoad={() => console.log('reCAPTCHA Loaded')}

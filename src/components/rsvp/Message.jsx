@@ -141,7 +141,7 @@ export const Message = () => {
       <center>
         <div className="message-title">
           <h1 >
-            {t('rsvp')}
+            Contatti
           </h1>
         </div>
 
@@ -150,9 +150,9 @@ export const Message = () => {
         >
           <form ref={form} onSubmit={sendEmail}>
           <input type="text" name="fullName" placeholder={t('fullName')} id="rsvpname" required/>
-          <input type="text" name="email" placeholder={t('email')} id="rsvpemail" required/>
-          <input type="text" name="number" placeholder={t('number')} id="rsvpnumber" />
-          <textarea name="message" placeholder={t('message')} id="textrsvp" />
+          <input type="text" name="email" placeholder='e-mail' id="rsvpemail" required/>
+          <input type="text" name="number" placeholder='Oggetto' id="rsvpnumber" />
+          <textarea name="message" placeholder='Messaggio' id="textrsvp" />
           <input 
           id="submit"
           type="submit" 
