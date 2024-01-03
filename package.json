@@ -2,7 +2,7 @@
   "name": "giocotta",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "/",
   "dependencies": {
     "node-fetch": "^2.6.1",
     "@emailjs/browser": "",
