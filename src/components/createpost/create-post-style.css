@@ -1,52 +1,35 @@
-.donazione {
-    align-items: center;
-    text-align: center;
-    font-weight: 500;
-    height: 3.5rem;
+.lbl {
+    text-align: right;
+    width: 100px;
+    white-space: nowrap;
+}
+
+.fld {
+    width: 100%;
+}
+
+.frm {
+    display: inline-block;
+}
+
+fieldset {
+    border-radius: 10px;
+    margin-bottom: 2em;
+}
+
+legend {
     font-size: 1.2rem;
-    width: 15rem;
-    border-radius: 5px;
-    border: 1;
-    display: block;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    /* color: #3b3838; */
-    padding-left: 0.2rem;
-    padding-right: 0.2rem;
-    cursor: pointer;
-
-        &:hover{
-            background-color: var(--submit-color);
-            transition: 200ms ease-in;
-        }
+    font-weight: bold;
 }
 
 
-.text-for-gallery{
-    margin-left: -0.7em;
-    display: none;
+.create-box {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3em;
 }
-
-/* Arrow styles for light theme */
-  .arrow {
-    background-image: url('../../assets/light_arrow.png');
-    display: block;
-    background-size: 95%;
-    width: 80px;
-    height: 51.7px;
-    position: absolute;
-    transition: background-size 0.3s ease;
-    overflow: hidden;
-    cursor: pointer;
-  }
-
-  body[data-theme="dark"] .arrow {
-    background-image: url('../../assets/dark_arrow.png'); 
-  }
-  
-  .arrow:hover {
-    background-size: 105%; 
-  }
 
 .lista-section{
     display: flex;
@@ -118,52 +101,11 @@
     margin: 0px;
 }
 
-.container-lista {
-    background-image: url('../../assets/giova.webp');
-    width: 30em; 
-    height: 40em; 
-    border-radius: 10px;
-    background-size: cover;
-    background-position: center;
-  }
-
-body[data-theme="dark"] .container-lista {
-    background-image: url('../../assets/cotta.webp'); 
-    width: 30em; 
-    height: 35em; 
-    background-size: cover;
-    background-position: center;
-  }
-
-.container-lista img {
-    background-image: "../../assets/giova.webp";
-    max-width: 50%;
-    height: auto;
-    border-radius: 10px;
-    
-}
-  
-  .curtain-lista {
-    position: absolute;
-    top: -1rem;
-    width: 60%;
-    height: 120%;
-    background-color: var(--color-background); 
-    transition: transform 3s ease-out, background-color 1s ease;
-  }
-  
-  .left-curtain-lista {
-    right: 41%;
-    transform: translateX(-100%);
-  }
-  
-  .right-curtain-lista {
-    left: 41%;
-    transform: translateX(100%);
-  }
-  
 
 @media screen and (max-width: 820px) {
+    .create-box {
+        width: 100%;
+    }
 
     .text-for-gallery{
         display: inherit;
@@ -207,6 +149,9 @@ body[data-theme="dark"] .container-lista {
   }
 
 @media screen and (max-width: 500px) {
+    .create-box {
+        width: 100%;
+    }
 
     .case {
         max-width: 85%;
