@@ -4,7 +4,7 @@ import listingsData from '../../data/ListingsData';
 import './ImmobiliPostPage-style.css'
 
 const BlogPostPage = () => {
-  const { slug } = useParams();
+  let { slug } = useParams();
   const [post, setPost] = useState(null);
 
   useEffect(() => {
