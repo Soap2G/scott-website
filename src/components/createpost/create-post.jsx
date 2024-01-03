@@ -25,7 +25,7 @@ const CreatePost = () => {
         style={{marginBottom: '2em'}}>
             Aggiungi immobile
         </div>
-        <form>
+        <form onSubmit={handleSubmit}>
         <fieldset>
             <legend>Proprietà</legend>
             <table>
