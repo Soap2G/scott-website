@@ -31,7 +31,7 @@ const CreatePost = () => {
             <table>
               <tr>
                 <td class="lbl"><label for="description">Descrizione:</label></td>
-                <td colspan="2"><textarea style={{ width: '100%'}} id="description" type="text" value={post.address} placeholder="..." /></td>
+                <td colspan="2"><textarea style={{ width: '100%'}} onChange={handleChange}  id="description" type="text" value={post.address} placeholder="..." /></td>
                 <td></td>
               </tr>
             </table>
@@ -39,15 +39,15 @@ const CreatePost = () => {
                 <table>
                     <tr>
                         <td class="lbl"><label for="address">Indirizzo:</label></td>
-                        <td><input class="fld" id="address" type="text" value={post.address} placeholder="Via/Piazza/Strada" /></td>
+                        <td><input class="fld" onChange={handleChange}  id="address" type="text" value={post.address} placeholder="Via/Piazza/Strada" /></td>
                     </tr>
                     <tr>
                         <td class="lbl"><label for="floorSpace">Superficie:</label></td>
-                        <td><input class="fld" id="floorSpace" type="text" placeholder={squareMeters}/></td>
+                        <td><input class="fld" onChange={handleChange}  id="floorSpace" type="text" placeholder={squareMeters}/></td>
                     </tr>
                     <tr>
                         <td class="lbl"><label for="dob">Locali:</label></td>
-                        <td><input class="fld" id="dob" type="number" placeholder="0" /></td>
+                        <td><input class="fld" onChange={handleChange}  id="dob" type="number" placeholder="0" /></td>
                     </tr>
                 </table>
             </div>
@@ -56,15 +56,15 @@ const CreatePost = () => {
                 <table>
                     <tr>
                         <td class="lbl"><label for="city">Città:</label></td>
-                        <td><input class="fld" id="city" type="text" placeholder="Modena"/></td>
+                        <td><input class="fld" onChange={handleChange}  id="city" type="text" placeholder="Modena"/></td>
                     </tr>
                     <tr>
                         <td class="lbl"><label for="addr">Posti auto:</label></td>
-                        <td><input class="fld" id="city" type="text" placeholder="1 in box privato/box in garage"/></td>
+                        <td><input class="fld" onChange={handleChange}  id="city" type="text" placeholder="1 in box privato/box in garage"/></td>
                     </tr>
                     <tr>
                         <td class="lbl"><label for="ctry">Altro:</label></td>
-                        <td><input class="fld" id="ctry" type="text" placeholder="Giardino, ascensore..."/></td>
+                        <td><input class="fld" onChange={handleChange}  id="ctry" type="text" placeholder="Giardino, ascensore..."/></td>
                     </tr>
                 </table>
             </div>
@@ -79,15 +79,15 @@ const CreatePost = () => {
                 <table>
                     <tr>
                         <td class="lbl"><label for="map">Planimetria:</label></td>
-                        <td><input class="fld" id="map" type="file" value={post.map} /></td>
+                        <td><input class="fld" onChange={handleChange}  id="map" type="file" value={post.map} /></td>
                     </tr>
                     <tr>
                         <td class="lbl"><label for="map">Planimetria:</label></td>
-                        <td><input class="fld" id="map" type="file" value={post.map} /></td>
+                        <td><input class="fld" onChange={handleChange}  id="map" type="file" value={post.map} /></td>
                     </tr>
                     <tr>
                         <td class="lbl"><label for="map">Planimetria:</label></td>
-                        <td><input class="fld" id="map" type="file" value={post.map} /></td>
+                        <td><input class="fld" onChange={handleChange}  id="map" type="file" value={post.map} /></td>
                     </tr>
                 </table>
             </div>
@@ -96,15 +96,15 @@ const CreatePost = () => {
                 <table>
                 <tr>
                         <td class="lbl"><label for="map">Planimetria:</label></td>
-                        <td><input class="fld" id="map" type="file" value={post.map} /></td>
+                        <td><input class="fld" onChange={handleChange}  id="map" type="file" value={post.map} /></td>
                     </tr>
                     <tr>
                         <td class="lbl"><label for="map">Planimetria:</label></td>
-                        <td><input class="fld" id="map" type="file" value={post.map} /></td>
+                        <td><input class="fld" onChange={handleChange}  id="map" type="file" value={post.map} /></td>
                     </tr>
                     <tr>
                         <td class="lbl"><label for="map">Planimetria:</label></td>
-                        <td><input class="fld" id="map" type="file" value={post.map} /></td>
+                        <td><input class="fld" onChange={handleChange}  id="map" type="file" value={post.map} /></td>
                     </tr>
                 </table>
             </div>
@@ -119,22 +119,22 @@ const CreatePost = () => {
                 <table>
                     <tr>
                         <td class="lbl"><label for="map">Foto copertina:</label></td>
-                        <td><input class="fld" id="map" type="file" value={post.map} /></td>
+                        <td><input class="fld" onChange={handleChange}  id="map" type="file" value={post.map} /></td>
                     </tr>
                     <tr>
                         <td class="lbl"><label for="map">Altre foto:</label></td>
-                        <td><input class="fld" id="map" type="file" value={post.map} multiple/></td>
+                        <td><input class="fld" onChange={handleChange}  id="map" type="file" value={post.map} multiple/></td>
                     </tr>
                     <tr>
                         <td class="lbl"><label for="map">Link video:</label></td>
-                        <td><input class="fld" id="map" type="text" value={post.map} /></td>
+                        <td><input class="fld" onChange={handleChange}  id="map" type="text" value={post.map} /></td>
                     </tr>
                 </table>
             </div>
         </fieldset>
 
         <input 
-          id="submit"
+          onChange={handleChange}  id="submit"
           type="submit" 
           value="Crea"
           style={{ cursor: 'pointer', fontWeight: "bold" }}
