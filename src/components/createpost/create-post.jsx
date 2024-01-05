@@ -21,7 +21,7 @@ const CreatePost = () => {
     const [doc5, setdoc5] = useState(null);
     const [thumb, setThumb] = useState(null);
     const [photos, setPhotos] = useState(null);
-
+    const [successMessage, setSuccessMessage] = useState('');
 
     const handleChange = (e) => {
         setPost({ ...post, [e.target.id]: e.target.value });
@@ -76,7 +76,26 @@ const CreatePost = () => {
 
             if (response.ok) {
                 console.log('Post created successfully');
-                // Handle successful response
+                setSuccessMessage('Immobile creato correttamente');
+                // Reset form values
+                setPost({
+                    description: '',
+                    address: '',
+                    floorSpace: '',
+                    locali: '',
+                    city: '',
+                    box: '',
+                    other: '',
+                    video: '',
+                });
+                setMap(null);
+                setdoc1(null);
+                setdoc2(null);
+                setdoc3(null);
+                setdoc4(null);
+                setdoc5(null);
+                setThumb(null);
+                setPhotos(null);
             } else {
                 console.error('Failed to create post');
                 // Handle error
@@ -220,6 +239,7 @@ const CreatePost = () => {
           style={{ cursor: 'pointer', fontWeight: "bold" }}
           />
         </form>
+        {successMessage && <div className='success-message'>{successMessage}</div>}
       </div>
     );
 };
