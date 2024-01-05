@@ -24,10 +24,12 @@ const CreatePost = () => {
     const [successMessage, setSuccessMessage] = useState('');
 
     const handleChange = (e) => {
+        setSuccessMessage('');
         setPost({ ...post, [e.target.id]: e.target.value });
     };
 
     const handleFileChange = (e) => {
+        setSuccessMessage('');
         if (e.target.id === "map") {
             setMap(e.target.files[0]);
         } else if (e.target.id === "doc1") {
