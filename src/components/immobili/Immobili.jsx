@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import "./immobili.css";
-import listingsData from '../../data/ListingsData';
+// import listingsData from '../../data/ListingsData';
 import { Link } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Immobili = () => {
-  // Using the imported listingsData directly
+  const [listingsData, setData] = useState([]);
+
+  useEffect(() => {
+    async function fetchListings() {
+      const response = await fetch('/.netlify/functions/createPost', {
+        method: 'GET'
+    });
+      const listingsData = await response.json();
+      setData(listingsData);
+    }
+
+    fetchListings();
+  }, []);
+  
   if (listingsData === undefined || listingsData.length === 0) {
     return "Sorry your filter did not match any listing";
   }
@@ -29,7 +42,7 @@ const Immobili = () => {
                 return (
                   <div className="my-col" key={index}>
                     <div className="listing">
-                      <div className="listing-img" style={{ background: `url("${process.env.PUBLIC_URL}/photos/${listing.image}") no-repeat center center` }} key={index}>
+                      <div className="listing-img" style={{ background: `url("${listing.thumb}") no-repeat center center` }} key={index}>    
                         <span className="address">{listing.address}</span>
                         <div className="details">
                           {/* <div className="my-col">

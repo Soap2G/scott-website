@@ -1,5 +1,5 @@
 {
-  "name": "giocotta",
+  "name": "scott-website",
   "version": "0.1.0",
   "private": true,
   "homepage": "/",
@@ -13,7 +13,6 @@
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
     "animate.css": "",
-    "locomotive-scroll": "^4.1.4",
     "react": "^18.2.0",
     "react-animate-on-scroll": "",
     "react-dom": "^18.2.0",
@@ -35,7 +34,9 @@
     "yarn": "^1.22.19",
     "react-i18next": "^11.14.3",
     "i18next":"",
-    "bootstrap":""
+    "bootstrap":"",
+    "firebase-admin":"",
+    "busboy": "^0.3.1"
   },
   "scripts": {
     "start": "react-scripts start",

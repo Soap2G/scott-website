@@ -1,17 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import listingsData from '../../data/ListingsData';
 import './ImmobiliPostPage-style.css'
 
 const BlogPostPage = () => {
   let { slug } = useParams();
   const [post, setPost] = useState(null);
+  const [listingsData, setListingsData] = useState([]);
+
+  useEffect(() => {
+    async function fetchListings() {
+      const response = await fetch('/.netlify/functions/createPost');
+      const data = await response.json();
+      setListingsData(data);
+    }
+
+    fetchListings();
+  }, []);
 
   useEffect(() => {
     // eslint-disable-next-line
     let foundPost = listingsData.find(listing => listing.address.toLowerCase().replace(/[\.,]/g, '').replace(/\s/g, '-') === slug);
     setPost(foundPost);
-  }, [slug]);
+  }, [slug, listingsData]);
 
   return (
     <div className='post-page-container'>
@@ -20,7 +30,7 @@ const BlogPostPage = () => {
           {post ? (
             <iframe title="Video Presentation" 
                     src={`https://www.youtube.com/embed/${post.video}?autoplay=1&controls=0&showinfo=0&mute=1&loop=1&playlist=${post.video}&vq=large`}
-                    frameBorder="0" allowFullscreen>
+                    frameBorder="0" allowFullScreen>
             </iframe>
           ) : (
             'Loading...'
