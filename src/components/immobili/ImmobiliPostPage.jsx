@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './ImmobiliPostPage-style.css'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 
 const BlogPostPage = () => {
   let { slug } = useParams();
@@ -8,7 +10,13 @@ const BlogPostPage = () => {
   const [post, setPost] = useState(null);
   const [listingsData, setListingsData] = useState([]);
 
-  const downloadFile = async (url, filename) => {
+  const downloadFile = async (url) => {
+    // Split the URL into segments
+    const segments = url.split('/');
+
+    // Get the filename
+    const uploadsIndex = segments.indexOf('uploads');
+    const filename = segments[uploadsIndex + 2].split('?')[0];
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -17,8 +25,9 @@ const BlogPostPage = () => {
         const blob = await response.blob();
         const blobUrl = window.URL.createObjectURL(blob);
 
-        // Create a new anchor element
+        // Create a hidden anchor element
         const anchor = document.createElement('a');
+        anchor.style.display = 'none'; // Ensure the element is not visible
         anchor.href = blobUrl;
         anchor.download = filename || 'download';
 
@@ -34,6 +43,7 @@ const BlogPostPage = () => {
     }
   };
 
+
   useEffect(() => {
     async function fetchListings() {
       const response = await fetch('/.netlify/functions/createPost');
@@ -46,7 +56,7 @@ const BlogPostPage = () => {
 
   useEffect(() => {
     // eslint-disable-next-line
-    let foundPost = listingsData.find(listing => listing.address.toLowerCase().replace(/[\.,]/g, '').replace(/\s/g, '-') === slug);
+    let foundPost = listingsData.find(listing => listing.uniqueFolder === slug);
     setPost(foundPost);
   }, [slug, listingsData]);
 
@@ -86,24 +96,65 @@ const BlogPostPage = () => {
                 {post ? post.description : 'Loading...'}
               </p>
           </div>
+
+          <div className="case"
+          style={{
+            textAlign: "left",
+            marginTop: "2em"
+          }}
+          >
+              <h2 >
+                Altre informazioni
+              </h2>
+              <p>
+                {post ? post.other : 'Loading...'}
+              </p>
+          </div>
+
           <hr />
           <div className="case"
           style={{
-            textAlign: "left"}}
+            textAlign: "left",
+            marginTop: "2em"
+          }}
           >
               <h2 >
                 Documentazione
               </h2>
               <div>
               {post && (
-                        <button 
-                            onClick={() => downloadFile(post.thumb, "Planimetria.webp")}
-                        >
-                            Download Planimetria
-                        </button>
+                        <div>
+                          <div style={{ display: 'flex' }} onClick={() => downloadFile(post.map)}>
+                            <span className='download-btn'> </span>
+                            <span style={{lineHeight: '2em', cursor: 'pointer'}}> Planimetria</span>
+                          </div>
+
+                          <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc1)}>
+                            <span className='download-btn'> </span>
+                            <span style={{lineHeight: '2em', cursor: 'pointer'}}> Documento aux 1</span>
+                          </div>
+
+                          <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc2)}>
+                            <span className='download-btn'> </span>
+                            <span style={{lineHeight: '2em', cursor: 'pointer'}}> Documento aux 2</span>
+                          </div>
+                        </div>
               )}
               </div>
           </div>
+      </div>
+      <div className='map-immobile'>
+      <MapContainer center={[51.505, -0.09]} zoom={13} style={{ height: "100%", width: "100%" }}>
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          />
+          <Marker position={[51.505, -0.09]}>
+            <Popup>
+              A pretty CSS3 popup. <br /> Easily customizable.
+            </Popup>
+          </Marker>
+        </MapContainer>
       </div>
     </center>
   );

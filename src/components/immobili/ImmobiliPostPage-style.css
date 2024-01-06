@@ -2,6 +2,46 @@
 width: 90%;
 }
 
+.leaflet-control{
+  display: none;
+}
+
+.map-immobile {
+  margin-top: 5em;
+  width: 70%;
+  height: 50vh;
+  overflow: 'hidden';
+}
+
+.leaflet-container {
+  border-radius: 15px;
+}
+
+
+.download-btn {
+  background-image: url('../../assets/download-light.png');
+  background-size: cover;
+  display: block;
+  width: 1.5em;
+  height: 1.5em;
+  cursor: pointer;
+  color: var(--color-text);
+  margin-right: 0.5em;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: 200ms ease-in;
+}
+
+.download-btn:hover {
+  color: var(--ref-color);
+  border: 1px solid var(--ref-color);
+  transition: 200ms ease-in;
+}
+
+body[data-theme="dark"] .download-btn {
+  background-image: url('../../assets/download-dark.png'); 
+}
+
 
 .video-background {
     position: relative;

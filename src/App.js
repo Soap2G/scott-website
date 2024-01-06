@@ -93,20 +93,20 @@ function App() {
                                     exact
                                     path="/immobili/:slug" 
                                     element={
-                                        <>
-                                            <Transitions>
+                                        <div>
+                                          <Transitions>
                                             <ImmobiliPostPage />
-                                            <div style={{ 
-                                                position: 'absolute', 
-                                                left: 0,
-                                                bottom: 0,
-                                                width: '100%'
-                                                }}>
-                                                <Footer />
+                                            <div style={{
+                                              left: 0,
+                                              bottom: 0,
+                                              width: '100%',
+                                              marginTop: '2em',
+                                            }}>
+                                              <Footer />
                                             </div>
-                                            </Transitions>
-                                        </>
-                                    } />
+                                          </Transitions>
+                                        </div>
+                                      } />
                                     <Route
                                     exact
                                     path="/crea" 

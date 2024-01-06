@@ -65,7 +65,7 @@ const Immobili = () => {
                             <div className="view-btn">
                             <Link 
                               // eslint-disable-next-line
-                              to={`/immobili/${listing.address.toLowerCase().replace(/[\.,]/g, '').replace(/\s/g, '-')}`}>
+                              to={`/immobili/${listing.uniqueFolder}`}>
                               Dettagli
                             </Link>
                             </div>

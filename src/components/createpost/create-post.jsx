@@ -1,8 +1,35 @@
 import React, { useState } from 'react';
 import './create-post-style.css'
+import { useLoadScript, Autocomplete } from '@react-google-maps/api';
 
+const libraries = ["places"];
 const CreatePost = () => {
+
+    const { isLoaded } = useLoadScript({
+        googleMapsApiKey: "AIzaSyCedyg9t4gtQlKuHjJUZgKYIvWiO7v-g9M",
+        libraries,
+    });
+    // eslint-disable-next-line
+    const [address, setAddress] = useState('');
+
+    const handleSelect = async (address) => {
+        // const results = await geocodeByAddress(address);
+        // const latLng = await getLatLng(results[0]);
+        // Process the selected address
+        console.log(address);
+        setAddress(address);
+
+        // Set coord field in post state
+        // setPost(prevState => ({
+        //     ...prevState,
+        //     coord: latLng,
+        // }));
+    };
+
+
+
     const [post, setPost] = useState({
+        coord: '',
         description: '',
         address: '',
         floorSpace: '',
@@ -111,6 +138,8 @@ const CreatePost = () => {
 
     let squareMeters = 'm\u00B2';
 
+    if (!isLoaded) return <div>Loading...</div>;
+
     return (
       <div className='create-box'>
         <div className='message-title'
@@ -134,16 +163,23 @@ const CreatePost = () => {
                     <tbody>
                         <tr>
                             <td className="lbl"><label htmlFor="address">Indirizzo:</label></td>
-                            <td><input className="fld" onChange={handleChange}  id="address" type="text" placeholder="Via/Piazza/Strada" /></td>
+                            <td>
+                                <Autocomplete
+                                    onSelect={handleSelect}
+                                >
+                                    <input className="fld" onChange={(e) => setAddress(e.target.value)} id="address" type="text" placeholder="Via/Piazza/Strada" />
+                                </Autocomplete>
+                            </td>
+                            {/* <td><input className="fld" onChange={handleChange}  id="address" type="text" placeholder="Via/Piazza/Strada" /></td> */}
                         </tr>
                         <tr>
                             <td className="lbl"><label htmlFor="floorSpace">Superficie:</label></td>
                             <td><input className="fld" onChange={handleChange}  id="floorSpace" type="text" placeholder={squareMeters}/></td>
                         </tr>
-                        <tr>
+                        {/* <tr>
                             <td className="lbl"><label htmlFor="locali">Locali:</label></td>
                             <td><input className="fld" onChange={handleChange}  id="locali" type="number" placeholder="0" /></td>
-                        </tr>
+                        </tr> */}
                     </tbody>
                 </table>
             </div>
@@ -155,10 +191,10 @@ const CreatePost = () => {
                             <td className="lbl"><label htmlFor="city">Città:</label></td>
                             <td><input className="fld" onChange={handleChange}  id="city" type="text" placeholder="Modena"/></td>
                         </tr>
-                        <tr>
+                        {/* <tr>
                             <td className="lbl"><label htmlFor="addr">Posti auto:</label></td>
                             <td><input className="fld" onChange={handleChange}  id="box" type="text" placeholder="1 in box privato/box in garage"/></td>
-                        </tr>
+                        </tr> */}
                         <tr>
                             <td className="lbl"><label htmlFor="ctry">Altro:</label></td>
                             <td><input className="fld" onChange={handleChange}  id="other" type="text" placeholder="Giardino, ascensore..."/></td>
@@ -190,7 +226,7 @@ const CreatePost = () => {
                 </table>
             </div>
 
-            <div className="frm">
+            {/* <div className="frm">
                 <table>
                     <tbody>
                     <tr>
@@ -207,7 +243,7 @@ const CreatePost = () => {
                         </tr>
                     </tbody>
                 </table>
-            </div>
+            </div> */}
 
         </fieldset>
 

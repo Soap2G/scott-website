@@ -1,0 +1,7 @@
+[
+    {
+        "origin": ["https://scottsrl.netlify.app","http://localhost:8888"],
+        "method": ["GET"],
+        "maxAgeSeconds": 3600
+    }
+]
