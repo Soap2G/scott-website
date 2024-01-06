@@ -96,7 +96,14 @@ function App() {
                                         <>
                                             <Transitions>
                                             <ImmobiliPostPage />
-                                            <Footer />
+                                            <div style={{ 
+                                                position: 'absolute', 
+                                                left: 0,
+                                                bottom: 0,
+                                                width: '100%'
+                                                }}>
+                                                <Footer />
+                                            </div>
                                             </Transitions>
                                         </>
                                     } />
