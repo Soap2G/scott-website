@@ -40,7 +40,7 @@ function Login() {
         <div>
             <center>
                 <h1 >
-                <span className="message-title">Effettual il login per procedere</span>
+                <span className="message-title">Effettua il login per procedere</span>
                 </h1>
                 <form onSubmit={handleSubmit} style={{ marginTop: '2em' }}>
                     <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" />
