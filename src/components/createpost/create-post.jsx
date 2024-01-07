@@ -1,35 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './create-post-style.css'
 import { useLoadScript, Autocomplete } from '@react-google-maps/api';
 
 const libraries = ["places"];
+
 const CreatePost = () => {
 
+    function removeLastWordAndComma(address) {
+        let parts = address.split(','); // Split the address by comma
+        if (parts.length > 1) {
+            parts.pop(); // Remove the last element
+            return parts.join(','); // Join the array back into a string
+        }
+        return address; // Return the original address if there's no comma
+    }    
+
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: "AIzaSyCedyg9t4gtQlKuHjJUZgKYIvWiO7v-g9M",
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
         libraries,
     });
     // eslint-disable-next-line
     const [address, setAddress] = useState('');
+    const [coordinates, setCoordinates] = useState(null);
 
-    const handleSelect = async (address) => {
-        // const results = await geocodeByAddress(address);
-        // const latLng = await getLatLng(results[0]);
-        // Process the selected address
-        console.log(address);
-        setAddress(address);
+    const autocompleteRef = useRef(null);
 
-        // Set coord field in post state
-        // setPost(prevState => ({
-        //     ...prevState,
-        //     coord: latLng,
-        // }));
+    const onPlaceChanged = () => {
+        if (autocompleteRef.current && autocompleteRef.current.getPlace()) {
+            const place = autocompleteRef.current.getPlace();
+            const address = place.formatted_address;
+            setAddress(address);
+                
+            // Extract the coordinates from the place object
+            const coordinates = {
+                lat: place.geometry.location.lat(),
+                lng: place.geometry.location.lng()
+            };
+            setCoordinates(coordinates); // Assuming you have a state [coordinates, setCoordinates]
+            
+            // this.setState(prevState => ({
+            //     post: {
+            //       ...prevState.post,
+            //       address: address,
+            //       coord: coordinates
+            //     }
+            //   }));
+        }
     };
 
 
-
     const [post, setPost] = useState({
-        coord: '',
+        coordinates: '',
         description: '',
         address: '',
         floorSpace: '',
@@ -81,7 +102,8 @@ const CreatePost = () => {
 
         const formData = new FormData();
         formData.append('description', post.description);
-        formData.append('address', post.address);
+        formData.append('coordinates', [coordinates.lat,coordinates.lng]);
+        formData.append('address', removeLastWordAndComma(address));
         formData.append('floorSpace', post.floorSpace);
         formData.append('locali', post.locali);
         formData.append('city', post.city);
@@ -149,7 +171,7 @@ const CreatePost = () => {
         <form onSubmit={handleSubmit} encType="multipart/form-data">
         <fieldset>
             <legend>Proprietà</legend>
-            <table>
+            {/* <table>
                 <tbody>
                     <tr>
                         <td className="lbl"><label htmlFor="description">Descrizione:</label></td>
@@ -157,25 +179,38 @@ const CreatePost = () => {
                         <td></td>
                     </tr>
                 </tbody>
-            </table>
+            </table> */}
             <div className="frm">
                 <table>
                     <tbody>
                         <tr>
+                            <td className="lbl"><label htmlFor="description">Descrizione:</label></td>
+                            <td><textarea style={{ width: '100%'}} onChange={handleChange}  id="description" type="text" placeholder="..." /></td>
+                            <td></td>
+                        </tr>
+                        <tr>
                             <td className="lbl"><label htmlFor="address">Indirizzo:</label></td>
                             <td>
-                                <Autocomplete
-                                    onSelect={handleSelect}
-                                >
-                                    <input className="fld" onChange={(e) => setAddress(e.target.value)} id="address" type="text" placeholder="Via/Piazza/Strada" />
-                                </Autocomplete>
+                            <Autocomplete
+                                onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
+                                onPlaceChanged={onPlaceChanged}
+                            >
+                                <input 
+                                    className="fld" 
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                    id="address" 
+                                    type="text" 
+                                    placeholder="Via/Piazza/Strada" 
+                                />
+                            </Autocomplete>
                             </td>
                             {/* <td><input className="fld" onChange={handleChange}  id="address" type="text" placeholder="Via/Piazza/Strada" /></td> */}
                         </tr>
-                        <tr>
+                        {/* <tr>
                             <td className="lbl"><label htmlFor="floorSpace">Superficie:</label></td>
                             <td><input className="fld" onChange={handleChange}  id="floorSpace" type="text" placeholder={squareMeters}/></td>
-                        </tr>
+                        </tr> */}
                         {/* <tr>
                             <td className="lbl"><label htmlFor="locali">Locali:</label></td>
                             <td><input className="fld" onChange={handleChange}  id="locali" type="number" placeholder="0" /></td>
@@ -188,9 +223,13 @@ const CreatePost = () => {
                 <table>
                     <tbody>
                         <tr>
+                            <td className="lbl"><label htmlFor="floorSpace">Superficie:</label></td>
+                            <td><input className="fld" onChange={handleChange}  id="floorSpace" type="text" placeholder={squareMeters}/></td>
+                        </tr>
+                        {/* <tr>
                             <td className="lbl"><label htmlFor="city">Città:</label></td>
                             <td><input className="fld" onChange={handleChange}  id="city" type="text" placeholder="Modena"/></td>
-                        </tr>
+                        </tr> */}
                         {/* <tr>
                             <td className="lbl"><label htmlFor="addr">Posti auto:</label></td>
                             <td><input className="fld" onChange={handleChange}  id="box" type="text" placeholder="1 in box privato/box in garage"/></td>

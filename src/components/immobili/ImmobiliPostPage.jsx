@@ -3,12 +3,20 @@ import { useParams } from 'react-router-dom';
 import './ImmobiliPostPage-style.css'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import marker from '../../assets/marker.png'
+
 
 const BlogPostPage = () => {
   let { slug } = useParams();
   let squareMeters = 'm\u00B2';
   const [post, setPost] = useState(null);
   const [listingsData, setListingsData] = useState([]);
+
+  const myIcon = L.icon({
+    iconUrl: marker,
+    iconSize: [48, 48], // size of the icon
+  });
 
   const downloadFile = async (url) => {
     // Split the URL into segments
@@ -76,7 +84,7 @@ const BlogPostPage = () => {
           <div className="message-title">
             <center>
               <h1 >
-              {post ? <span className="message-title">{post.address}, {post.city}</span> : 'Loading...'}
+              {post ? <span className="message-title">{post.address}</span> : 'Loading...'}
               </h1>
             </center>
           </div>
@@ -144,17 +152,19 @@ const BlogPostPage = () => {
           </div>
       </div>
       <div className='map-immobile'>
-      <MapContainer center={[51.505, -0.09]} zoom={13} style={{ height: "100%", width: "100%" }}>
+      {post && (
+        <MapContainer center={[post.coordinates.split(',')[0], post.coordinates.split(',')[1]]} zoom={13} style={{ height: "100%", width: "100%" }}>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
-          <Marker position={[51.505, -0.09]}>
+          <Marker position={[post.coordinates.split(',')[0], post.coordinates.split(',')[1]]} icon={myIcon}>
             <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
+            {post.address}
             </Popup>
           </Marker>
         </MapContainer>
+      )}
       </div>
     </center>
   );

@@ -16,8 +16,6 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
 import CreatePost from "./components/createpost/create-post";
 
-
-
 import './App.css';
 
 function App() {
@@ -113,7 +111,7 @@ function App() {
                                     element={
                                         <>
                                             <Transitions>
-                                            <CreatePost />
+                                            <CreatePost/>
                                             <Footer />
                                             </Transitions>
                                         </>

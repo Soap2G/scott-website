@@ -2,6 +2,16 @@
 width: 90%;
 }
 
+.pac-logo::after {
+  background-image: none;
+  background-color: none;
+  border-radius: 10px;
+}
+
+.pac-item{
+  font-family: 'Josefin Sans', sans-serif;
+}
+
 .leaflet-control{
   display: none;
 }
