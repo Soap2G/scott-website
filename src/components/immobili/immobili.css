@@ -18,24 +18,27 @@
   justify-content: space-between;
 }
 
-.my-col, .my-col-9 {
+.my-col{
   flex: 0 0 21%;  /* Each column takes up one-third of the container */
   max-width: 21%;
   margin: 0.2em;
 }
 
 .my-col-9 {
-  font-size: 1.1rem;
+  max-width: 50%;
+  margin: 0.2em;
+  margin-bottom: 2em;
 }
 
-@media screen and (max-width: 1120px) {
+
+@media screen and (max-width: 1500px) {
   .my-col, .my-col-9 {
-    flex: 0 0 30%;   /* Below 768px, each column takes full width */
-    max-width: 30%;
+    flex: 0 0 50%;   /* Below 768px, each column takes full width */
+    max-width: 50%;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 600px) {
   .my-col, .my-col-9 {
     flex: 0 0 100%;   /* Below 768px, each column takes full width */
     max-width: 100%;
@@ -97,7 +100,7 @@ color: darkgrey;
 #listings .listings-results .listing {
 background: #fff;
 border-radius: 5px;
-margin-bottom: 60px;
+/* margin-bottom: 60px; */
 -webkit-box-shadow: 0px 9px 54px -4px var(--color-footer);
 -moz-box-shadow: 0px 9px 54px -4px var(--color-footer);
 box-shadow: 0px 9px 54px -4px var(--color-footer);
@@ -110,7 +113,7 @@ position: relative;
 -moz-background-size: cover;
 -o-background-size: cover;
 background-size: cover;
-min-height: 200px;
+min-height: 15em;
 -webkit-border-radius: 5px;
 -moz-border-radius: 5px;
 border-radius: 5px;
@@ -124,7 +127,6 @@ border-radius: 5px;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    min-height: 200px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -140,7 +142,7 @@ color: var(--selection-color);
 font-size: 1rem;
 text-transform: capitalize;
 position: absolute;
-bottom: 20px;
+bottom: 3%;
 opacity: 1;
 transition: all 0.4s ease-in-out;
 /* text-shadow: 0px 1px 4px rgba(91, 91, 91, 1); */
@@ -162,13 +164,13 @@ right: 0;
 -moz-border-radius-topright: 5px;
 border-radius: 5px;
 /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7711f4+0,c204f2+100 */
-background: rgba(119, 17, 244, .8);
+background: rgba(36, 35, 36, 0.8);
 /* Old browsers */
-background: -moz-linear-gradient(-45deg, rgba(119, 17, 244, .8) 0%, rgba(194, 4, 242, .8) 100%);
+background: -moz-linear-gradient(-45deg, rgba(36, 35, 36, 0.8), rgba(224, 222, 227, 0.8) 100%);
 /* FF3.6-15 */
-background: -webkit-linear-gradient(-45deg, rgba(119, 17, 244, .8) 0%, rgba(194, 4, 242, .8) 100%);
+background: -webkit-linear-gradient(-45deg, rgba(36, 35, 36, 0.8), rgba(224, 222, 227, 0.8) 100%);
 /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(135deg, rgba(119, 17, 244, .8) 0%, rgba(194, 4, 242, .8) 100%);
+background: linear-gradient(135deg, rgba(36, 35, 36, 0.8), rgba(224, 222, 227, 0.8) 100%);
 /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7711f4', endColorstr='#c204f2',GradientType=1);
 /* IE6-9 fallback on horizontal gradient */
@@ -202,7 +204,7 @@ margin-top: 3px;
 margin-bottom: 5px;
 }
 #listings .listings-results .listing-img .details .listing-details {
-margin-top: 30px;
+/* margin-top: 30px; */
 margin-bottom: 10px;
 }
 #listings .listings-results .listing-img .details .listing-details .fa {
@@ -219,9 +221,46 @@ position: relative;
 top: 3px;
 }
 #listings .listings-results .listing-img .details .listing-details .floor-space {
-margin-bottom: 1px;
-font-size: 1.1rem;
+  border-radius: 5px;
+  padding: 3%;
+  background-color: var(--selection-color);
+  color: var(--selection-b-color);
+  margin: .5em;
+  font-size: 1.1rem;
 }
+
+.dettagli-button {
+  background-color: var(--color-footer);
+  border-radius: 10px;
+  padding: 3%;
+  color: var(--selection-b-color);
+  margin-bottom: 1px;
+  font-size: 1.1rem;
+  box-shadow: 0 2px var(--selection-b-color);
+}
+
+.dettagli-button:hover {
+  background-color: var(--submit-color);
+  transition: 200ms ease-in;
+}
+
+.delete-button {
+  background-color: var(--color-footer);
+  border-radius: 10px;
+  padding: 3%;
+  color: var(--selection-b-color);
+  margin-bottom: 1px;
+  font-size: 1.1rem;
+  font-weight: 400;
+  box-shadow: 0 2px var(--selection-b-color);
+}
+
+.delete-button:hover {
+  color: var(--selection-color);
+  background-color: var(--feel-color);
+  transition: 200ms ease-in;
+}
+
 #listings .listings-results .post-date {
 font-size: 0.6rem;
 display: block;

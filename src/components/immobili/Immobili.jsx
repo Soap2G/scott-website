@@ -20,7 +20,24 @@ const Immobili = () => {
   }, []);
   
   if (listingsData === undefined || listingsData.length === 0) {
-    return "Sorry your filter did not match any listing";
+    return (
+        <section id='listings' style={{marginBottom: '5em'}}>
+            <div className="message-title" style={{marginBottom: '1em'}}>
+                <center>
+                <h1 >
+                Vetrina immobili
+                </h1>
+                </center>
+            </div>
+            <section className="listings-results">
+                <h2 >
+                    <center>
+                        Nessun immobile trovato
+                    </center>
+                </h2>
+            </section>
+      </section>
+    );
   }
 
   return (
@@ -28,7 +45,7 @@ const Immobili = () => {
       <div className="message-title">
         <center>
           <h1 >
-            Immobili
+            Vetrina immobili
           </h1>
         </center>
       </div>
@@ -42,41 +59,47 @@ const Immobili = () => {
                 return (
                   <div className="my-col" key={index}>
                     <div className="listing">
-                      <div className="listing-img" style={{ background: `url("${listing.thumb}") no-repeat center center` }} key={index}>    
-                        <span className="address">{listing.address}</span>
-                        <div className="details">
-                          {/* <div className="my-col">
-                            <img className="user-img-box" src={listing.userImg} alt="" />
-                          </div> */}
-                          <div className="my-col-9">
-                            <div className="user-details">
-                              <span className="user-name">{listing.user}</span>
-                            </div>
-                            <div className="listing-details">
-                              <div className="floor-space">
-                                <i className="fa fa-square-o"></i>
-                                <span>{listing.floorSpace} m&sup2;</span>
+                        <div className="listing-img" style={{ background: `url("${listing.thumb}") no-repeat center center` }} key={index}>    
+                          <div className="address" style={{bottom: '25%'}}>{listing.name}</div>
+                          <div className="address">{listing.address}</div>
+                          <div className="details">
+                            {/* <div className="my-col">
+                              <img className="user-img-box" src={listing.userImg} alt="" />
+                            </div> */}
+                            <div className="my-col-9">
+                              <div className="user-details">
+                                <span className="user-name">{listing.user}</span>
                               </div>
-                              <div className="bedrooms">
-                                <i className="fa fa-bed"></i>
-                                <span>{listing.rooms} locali</span>
+                              <div className="listing-details">
+                                <div className="floor-space">
+                                  {listing.address}
+                                </div>
+                                {/* <hr style={{color: 'var(--selection-color)'}}/> */}
+                                <span className="floor-space">
+                                  {listing.floorSpace} m&sup2;
+                                </span>
+                                
+                                {/* <div className="bedrooms">
+                                  <i className="fa fa-bed"></i>
+                                  <span>{listing.rooms} locali</span>
+                                </div> */}
                               </div>
                             </div>
-                            <div className="view-btn">
-                            <Link 
-                              // eslint-disable-next-line
-                              to={`/immobili/${listing.uniqueFolder}`}>
-                              Dettagli
-                            </Link>
-                            </div>
-                            <span className="post-date">Registrato il: {listing.postDate}</span>
+                            <center>
+                                <Link to={`/immobili/${listing.uniqueFolder}`}>
+                                <span className="dettagli-button"
+                                style={{ padding: '1em' }}
+                                >
+                                VEDI DETTAGLI
+                                </span>
+                                </Link>
+                                </center>
                           </div>
+                          {/* <div className="bottom-info">
+                            <span className="price">${formattedPrice}</span>
+                            <span className="location"><i className="fa fa-map-marker"></i> {listing.city}, {listing.state}</span>
+                          </div> */}
                         </div>
-                        {/* <div className="bottom-info">
-                          <span className="price">${formattedPrice}</span>
-                          <span className="location"><i className="fa fa-map-marker"></i> {listing.city}, {listing.state}</span>
-                        </div> */}
-                      </div>
                     </div>
                   </div>
                 );

@@ -50,6 +50,7 @@ const CreatePost = () => {
 
 
     const [post, setPost] = useState({
+        name: '',
         coordinates: '',
         description: '',
         address: '',
@@ -101,6 +102,7 @@ const CreatePost = () => {
         e.preventDefault();
 
         const formData = new FormData();
+        formData.append('name', post.name);
         formData.append('description', post.description);
         formData.append('coordinates', [coordinates.lat,coordinates.lng]);
         formData.append('address', removeLastWordAndComma(address));
@@ -130,6 +132,8 @@ const CreatePost = () => {
                 setSuccessMessage('Immobile creato correttamente');
                 // Reset form values
                 setPost({
+                    name: '',
+                    coordinates: '',
                     description: '',
                     address: '',
                     floorSpace: '',
@@ -184,6 +188,10 @@ const CreatePost = () => {
                 <table>
                     <tbody>
                         <tr>
+                            <td className="lbl"><label htmlFor="name">Titolo:</label></td>
+                            <td><input className="fld" onChange={handleChange}  id="name" type="text" placeholder="Casa indipendente"/></td>
+                        </tr>
+                        <tr>
                             <td className="lbl"><label htmlFor="description">Descrizione:</label></td>
                             <td><textarea style={{ width: '100%'}} onChange={handleChange}  id="description" type="text" placeholder="..." /></td>
                             <td></td>
@@ -202,6 +210,7 @@ const CreatePost = () => {
                                     id="address" 
                                     type="text" 
                                     placeholder="Via/Piazza/Strada" 
+                                    required
                                 />
                             </Autocomplete>
                             </td>
@@ -211,10 +220,6 @@ const CreatePost = () => {
                             <td className="lbl"><label htmlFor="floorSpace">Superficie:</label></td>
                             <td><input className="fld" onChange={handleChange}  id="floorSpace" type="text" placeholder={squareMeters}/></td>
                         </tr> */}
-                        {/* <tr>
-                            <td className="lbl"><label htmlFor="locali">Locali:</label></td>
-                            <td><input className="fld" onChange={handleChange}  id="locali" type="number" placeholder="0" /></td>
-                        </tr> */}
                     </tbody>
                 </table>
             </div>
@@ -222,6 +227,10 @@ const CreatePost = () => {
             <div className="frm">
                 <table>
                     <tbody>
+                        <tr>
+                            <td className="lbl"><label htmlFor="locali">Locali:</label></td>
+                            <td><input className="fld" onChange={handleChange}  id="locali" type="text" placeholder="0, 3-5" /></td>
+                        </tr>
                         <tr>
                             <td className="lbl"><label htmlFor="floorSpace">Superficie:</label></td>
                             <td><input className="fld" onChange={handleChange}  id="floorSpace" type="text" placeholder={squareMeters}/></td>

@@ -5,11 +5,9 @@ button {
     color: var(--color-text);
 }
 
-#submit {
-    &:hover{
-        background-color: var(--submit-color);
-        transition: 200ms ease-in;
-    }
+#submit:hover{
+    background-color: var(--submit-color);
+    transition: 200ms ease-in;
 }
 
 .success-message {

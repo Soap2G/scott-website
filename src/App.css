@@ -1,7 +1,6 @@
 p/*Remove the highlight blue background color from mobile*/
 input,
 textarea,
-button,
 select,
 a {
     -webkit-tap-highlight-color: transparent;

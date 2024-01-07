@@ -9,6 +9,7 @@ const Introduction = () => {
 			className="intro-section"
 		>
 			<Parallax speed={-15}>
+				<center>
 				<div className="intro-title">
 					<h1>
 						Scott SRL
@@ -17,6 +18,7 @@ const Introduction = () => {
 				<p style={{ fontSize: "1.7rem" }}>
 					Compravendita di beni immobili
 				</p>
+				</center>
 			</Parallax>
 		</section>
 	);

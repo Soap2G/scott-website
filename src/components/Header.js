@@ -1,40 +1,72 @@
 import React from "react";
 import './Header.css'; // Make sure to create a corresponding CSS file
 import { Link } from "react-router-dom";
-// import { useTranslation } from 'react-i18next';
+import { useAuth } from '../components/auth/AuthContext'; // Import your AuthContext
+import { getAuth, signOut } from "firebase/auth"; // Import Firebase Authentication functions
+
 
 const Header = () => {
-  // const { i18n } = useTranslation();
-  // const { t } = useTranslation();
+  const { currentUser } = useAuth();
 
-  // const changeLanguage = () => {
-  //   i18n.changeLanguage(i18n.language === 'en' ? 'it' : 'en');
-  // };
-
-  // const nextLanguage = i18n.language === 'en' ? 'it' : 'en';
+  const handleSignOut = async () => {
+    const auth = getAuth();
+    try {
+      await signOut(auth);
+      console.log("User signed out");
+    } catch (error) {
+      console.error("Error signing out: ", error);
+    }
+  };
 
   return (
     <div className="header-box">
       <div className="header-nav">
         <Link
           className="nav-link active"
-          style={{ 
-            color: 'var(--text-color)'}}
+          style={{ color: 'var(--text-color)'}}
           aria-current="page"
           to="/"
         >
           home
-        </Link>
-        {/* |
-        <Link
+        </Link> |
+
+        {currentUser ? (
+          <div>
+            <div className="dropdown">
+              <button 
+              style={{ color: 'var(--text-color)'}} 
+              className="dropbtn" 
+              tabIndex="0">
+                area riservata
+              </button>
+                <div className="dropdown-content">
+                  <Link 
+                  className="nav-link active"
+                  style={{ color: 'var(--text-color)'}}
+                  aria-current="page"
+                  to="/crea">crea</Link>
+                  <Link 
+                  className="nav-link active"
+                  style={{ color: 'var(--text-color)'}}
+                  aria-current="page"
+                  to="/modifica">modifica</Link>
+                  <button
+                  className="button-dropdown"
+                  onClick={handleSignOut}
+                  >
+                  esci
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <Link
           className="nav-link active"
-          style={{ 
-            color: 'var(--text-color)'}}
+          style={{ color: 'var(--text-color)'}}
           aria-current="page"
-          to="/blog"
-        >
-          immobili
-        </Link> */}
+          to="/login"
+        >login</Link>
+        )}
       </div>
     </div>
   );

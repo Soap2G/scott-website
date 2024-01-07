@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef,  useState, useEffect } from 'react';
 import { ParallaxProvider } from 'react-scroll-parallax';
 import { Routes, Route } from 'react-router-dom';
 import Introduction from './components/intro/Introduction';
@@ -15,10 +15,19 @@ import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
 import CreatePost from "./components/createpost/create-post";
+import EditPost from "./components/createpost/edit-post";
+import { AuthProvider } from './components/auth/AuthContext.js';
+// import { useAuth } from './components/auth/AuthContext.js';
+import Login from './components/auth/login.js'; // Import your Login component
+import PrivateRoute from './components/auth/PrivateRoute.js'; // Import your Login component
+// import firebase from './components/auth/firebase.js';
+
 
 import './App.css';
 
 function App() {
+
+
     const ref = useRef(null);
 	
     const location = useLocation();
@@ -54,6 +63,7 @@ function App() {
     }, []);
 
     return (
+        <AuthProvider>
         <ParallaxProvider>
             <I18nextProvider i18n={i18n}>
                 <main ref={ref}>
@@ -64,65 +74,88 @@ function App() {
                             initial={false}
                             mode='wait'
                             >
-                                <Routes 
-                                location={location}
-                                key={location.pathname}
-                                >
-                                    <Route 
-                                    exact
-                                    path="/" 
-                                    element={
-                                        <>
+                                
+                                    <Routes 
+                                    location={location}
+                                    key={location.pathname}
+                                    >
+                                        <Route 
+                                        exact
+                                        path="/" 
+                                        element={
+                                            <>
+                                                <Transitions>
+                                                    <Introduction />
+                                                    <Immobili />
+                                                    <GoogleReCaptchaProvider 
+                                                        reCaptchaKey="6LfmHDEpAAAAALxj7qIMB5DwWa2HOdi7ABKfIs9V"
+                                                        onLoad={() => console.log('reCAPTCHA Loaded')}
+                                                        >
+                                                        <Message />
+                                                    </GoogleReCaptchaProvider>
+                                                    <Footer />
+                                                </Transitions>
+                                                
+                                            </>
+                                        } />
+                                        <Route
+                                        exact
+                                        path="/immobili/:slug" 
+                                        element={
+                                            <div>
                                             <Transitions>
-                                                <Introduction />
-                                                <Immobili />
-                                                <GoogleReCaptchaProvider 
-                                                    reCaptchaKey="6LfmHDEpAAAAALxj7qIMB5DwWa2HOdi7ABKfIs9V"
-                                                    onLoad={() => console.log('reCAPTCHA Loaded')}
-                                                    >
-                                                    <Message />
-                                                </GoogleReCaptchaProvider>
+                                                <ImmobiliPostPage />
+                                                <div style={{
+                                                left: 0,
+                                                bottom: 0,
+                                                width: '100%',
+                                                marginTop: '2em',
+                                                }}>
                                                 <Footer />
+                                                </div>
                                             </Transitions>
-                                            
-                                        </>
-                                    } />
-                                    <Route
-                                    exact
-                                    path="/immobili/:slug" 
-                                    element={
-                                        <div>
-                                          <Transitions>
-                                            <ImmobiliPostPage />
-                                            <div style={{
-                                              left: 0,
-                                              bottom: 0,
-                                              width: '100%',
-                                              marginTop: '2em',
-                                            }}>
-                                              <Footer />
                                             </div>
-                                          </Transitions>
-                                        </div>
-                                      } />
-                                    <Route
-                                    exact
-                                    path="/crea" 
-                                    element={
-                                        <>
-                                            <Transitions>
-                                            <CreatePost/>
-                                            <Footer />
-                                            </Transitions>
-                                        </>
-                                    } />
-                                </Routes>
+                                        } />
+                                        <Route
+                                            path="/login"
+                                            element={<Login/>}
+                                        />
+                                        <Route
+                                            exact
+                                            path="/crea"
+                                            element={
+                                                <PrivateRoute>
+                                                    <>
+                                                        <Transitions>
+                                                            <CreatePost />
+                                                            <Footer />
+                                                        </Transitions>
+                                                    </>
+                                                </PrivateRoute>
+                                            }
+                                        />
+                                        <Route
+                                            exact
+                                            path="/modifica"
+                                            element={
+                                                <PrivateRoute>
+                                                    <>
+                                                        <Transitions>
+                                                            <EditPost />
+                                                            <Footer />
+                                                        </Transitions>
+                                                    </>
+                                                </PrivateRoute>
+                                            }
+                                        />
+                                    </Routes>
                             </AnimatePresence>
                     </div>
                     
                 </main>
             </I18nextProvider>
         </ParallaxProvider>
+        </AuthProvider>
     );
 }
 

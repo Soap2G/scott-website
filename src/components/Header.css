@@ -29,6 +29,67 @@
     }
 }
 
+/* Base styles for the dropdown button */
+.dropdown .dropbtn {
+    background: none;
+    font: inherit;
+    border: none;
+    color: var(--text-color);
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  /* Hiding the dropdown content by default */
+  .dropdown-content {
+    display: none;
+    position: absolute; /* To position dropdown content correctly */
+    /* Style your dropdown content (background, color, etc.) */
+  }
+  
+  /* Displaying the dropdown content when hovering over the dropdown button */
+  .dropdown:hover .dropdown-content,
+  .dropdown .dropbtn:focus + .dropdown-content {
+    display: block;
+  }
+  
+  .dropdown-content a {
+    padding-left: 1em;
+    padding-right: 1em;
+    border-radius: 10px;
+    text-decoration: none; /* To remove underline from links */
+    display: block; /* To make each link take the full width */
+  }
+  
+  .dropdown-content a:hover {
+    background-color: var(--selection-b-color);
+    color: var(--selection-color) !important;
+  }
+
+  .button-dropdown:hover {
+    background-color: var(--feel-color);
+    color: var(--selection-color) !important;
+  }
+  
+  .nav-link.active {
+    color: var(--text-color);
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .button-dropdown {
+    background: none;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-radius: 10px;
+    font: inherit;
+    border: none;
+    color: var(--text-color);
+    font-weight: bold;
+    cursor: pointer;
+    display: block;
+  }
+  
+
 @media screen and (max-width: 850px) {
 
 
