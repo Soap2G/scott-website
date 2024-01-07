@@ -88,7 +88,7 @@ function App() {
                                                     <Introduction />
                                                     <Immobili />
                                                     <GoogleReCaptchaProvider 
-                                                        reCaptchaKey="6LfmHDEpAAAAALxj7qIMB5DwWa2HOdi7ABKfIs9V"
+                                                        reCaptchaKey="6LeVS0kpAAAAAAtEQU60XbsXQb6GFCaPeP8w5JAF"
                                                         onLoad={() => console.log('reCAPTCHA Loaded')}
                                                         >
                                                         <Message />
