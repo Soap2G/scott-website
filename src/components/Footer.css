@@ -8,17 +8,19 @@
 }
 
 .footer-row {
+    padding: 1em;
     display: flex;
     grid-template-columns: repeat(
         auto-fill,
-        minmax(185px, 1fr)
+        minmax(18px, 1fr)
     );
-    grid-gap: 5em;
+    grid-gap: 5vw;
     width: 100%;
 
 }
 
 .footer-column {
+    width: 100%;
     display: flex;
     flex-direction: column;
     text-align: left;

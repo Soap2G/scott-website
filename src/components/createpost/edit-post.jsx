@@ -78,6 +78,11 @@ const CreatePost = () => {
         </center>
       </div>
       <section className="listings-results" style={{height: '80vh'}}>
+        <Link to={`/crea`}>
+            <span className="add-button" style={{ padding: '1em' }}>
+                + AGGIUNGI NUOVO
+            </span>
+        </Link>
           <div className="listings-container">
               {listingsData.map((listing, index) => {
                 return (
@@ -88,7 +93,7 @@ const CreatePost = () => {
                           <div className="address">{listing.address}</div>
                           <div className="details">
                           <center style={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center', gap: '1em' }}>
-                                <Link to={`/immobili/${listing.uniqueFolder}`}>
+                                <Link to={`/modifica/${listing.id}`}>
                                     <span className="dettagli-button" style={{ padding: '1em' }}>
                                         MODIFICA
                                     </span>

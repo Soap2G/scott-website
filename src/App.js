@@ -4,7 +4,6 @@ import { Routes, Route } from 'react-router-dom';
 import Introduction from './components/intro/Introduction';
 import Immobili from './components/immobili/Immobili';
 import { Message } from './components/rsvp/Message';
-import ThemeButton from './contexts/ThemeButton';
 import Footer from "./components/Footer.js";
 import Header from "./components/Header.js";
 import Transitions from "./components/Transitions";
@@ -16,6 +15,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
 import CreatePost from "./components/createpost/create-post";
 import EditPost from "./components/createpost/edit-post";
+import UpdatePost from "./components/createpost/update-post";
 import { AuthProvider } from './components/auth/AuthContext.js';
 // import { useAuth } from './components/auth/AuthContext.js';
 import Login from './components/auth/login.js'; // Import your Login component
@@ -34,13 +34,6 @@ function App() {
 
     // Initialize theme based on localStorage or default to 'light'
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
-
-    // Toggle theme and store in localStorage
-    const toggleTheme = () => {
-        const newTheme = theme === "light" ? "dark" : "light";
-        setTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
-    };
 
     // Apply theme to body
     useEffect(() => {
@@ -67,9 +60,8 @@ function App() {
         <ParallaxProvider>
             <I18nextProvider i18n={i18n}>
                 <main ref={ref}>
-                    <Header />
+                    <Header theme={theme} setTheme={setTheme} />
                     <div className={`theme-${theme}`}>
-                        <ThemeButton onClick={toggleTheme} flipped={theme === 'dark'} />
                             <AnimatePresence 
                             initial={false}
                             mode='wait'
@@ -142,6 +134,20 @@ function App() {
                                                     <>
                                                         <Transitions>
                                                             <EditPost />
+                                                            <Footer />
+                                                        </Transitions>
+                                                    </>
+                                                </PrivateRoute>
+                                            }
+                                        />
+                                        <Route
+                                            exact
+                                            path="/modifica/:updateSlug"
+                                            element={
+                                                <PrivateRoute>
+                                                    <>
+                                                        <Transitions>
+                                                            <UpdatePost />
                                                             <Footer />
                                                         </Transitions>
                                                     </>

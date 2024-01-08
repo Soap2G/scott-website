@@ -70,7 +70,7 @@ const BlogPostPage = () => {
 
   return (
     <center>
-      {post && post.video && (
+      {post && post.video ? (
         <div className="video-background">
           <div className="video-foreground">
               <iframe title="Video Presentation" 
@@ -79,7 +79,7 @@ const BlogPostPage = () => {
               </iframe>
           </div>
         </div>
-        )}
+        ) : null}
       <div className='post-page-container'>
           <div className="message-title">
             <center>

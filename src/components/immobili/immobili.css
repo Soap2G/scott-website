@@ -229,7 +229,8 @@ top: 3px;
   font-size: 1.1rem;
 }
 
-.dettagli-button {
+.dettagli-button, 
+.add-button {
   background-color: var(--color-footer);
   border-radius: 10px;
   padding: 3%;
@@ -241,6 +242,12 @@ top: 3px;
 
 .dettagli-button:hover {
   background-color: var(--submit-color);
+  transition: 200ms ease-in;
+}
+
+.add-button:hover {
+  background-color: var(--a-color);
+  color: var(--selection-color);
   transition: 200ms ease-in;
 }
 
