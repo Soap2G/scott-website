@@ -13,7 +13,6 @@ const [isSubmitting, setIsSubmitting] = useState(false);
 
 const [post, setPost] = useState(null);
 
-const [map, setMap] = useState(null);
 const [doc1, setdoc1] = useState(null);
 const [doc2, setdoc2] = useState(null);
 const [doc3, setdoc3] = useState(null);
@@ -97,9 +96,7 @@ const handleChange = (e) => {
 
 const handleFileChange = (e) => {
     setSuccessMessage('');
-    if (e.target.id === "map") {
-        setMap(e.target.files[0]);
-    } else if (e.target.id === "doc1") {
+    if (e.target.id === "doc1") {
         setdoc1(e.target.files[0]);
     } else if (e.target.id === "doc2") {
         setdoc2(e.target.files[0]);
@@ -112,9 +109,7 @@ const handleFileChange = (e) => {
     } else if (e.target.id === "thumb") {
         setThumb(e.target.files[0]);
     } else if (e.target.id === "photos") {
-        // console.log(e.target.files)
         setPhotos(Array.from(e.target.files));
-        // console.log(photos)
     }
 };
 
@@ -122,17 +117,13 @@ const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     const formData = new FormData();
-    formData.append('name', post.name);
-    formData.append('description', post.description);
-    formData.append('address', address !== '' ? removeLastWordAndComma(address) : post.address);
+    for (let key in post) {
+        formData.append(key, post[key]);
+    }
+    // Special case for coordinates
     formData.append('coordinates', coordinates ? [coordinates.lat, coordinates.lng] : post.coordinates);
-    formData.append('floorSpace', post.floorSpace);
-    formData.append('locali', post.locali);
-    formData.append('city', post.city);
-    formData.append('box', post.box);
-    formData.append('other', post.other);
-    formData.append('video', post.video);
-    if (map) formData.append('map', map);
+    // Special case for address
+    formData.append('address', address !== '' ? removeLastWordAndComma(address) : post.address);
     if (doc1) formData.append('doc1', doc1);
     if (doc2) formData.append('doc2', doc2);
     if (doc3) formData.append('doc3', doc3);
@@ -157,19 +148,13 @@ const handleSubmit = async (e) => {
             console.log('Post created successfully');
             setSuccessMessage('Immobile aggiornato correttamente');
             // Reset form values
-            setPost({
-                name: '',
-                coordinates: '',
-                description: '',
-                address: '',
-                floorSpace: '',
-                locali: '',
-                city: '',
-                box: '',
-                other: '',
-                video: '',
+            setPost(prevPost => {
+                let newPost = {...prevPost};
+                Object.keys(newPost).forEach(key => {
+                    newPost[key] = '';
+                });
+                return newPost;
             });
-            setMap(null);
             setdoc1(null);
             setdoc2(null);
             setdoc3(null);
@@ -285,16 +270,24 @@ if (!isLoaded) return <div>Loading...</div>;
                 <table>
                     <tbody>
                         <tr>
-                            <td className="lbl"><label htmlFor="map">Planimetria:</label></td>
-                            <td><input className="fld" onChange={handleFileChange}  id="map" type="file" /></td>
-                        </tr>
-                        <tr>
-                            <td className="lbl"><label htmlFor="map">Planimetria:</label></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc1" type="text" placeholder={post ? post.nameDoc1 : "nome doc 1"}/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc1" type="file" /></td>
                         </tr>
                         <tr>
-                            <td className="lbl"><label htmlFor="map">Planimetria:</label></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc2" type="text" placeholder={post ? post.nameDoc2 : "nome doc 2"}/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc2" type="file" /></td>
+                        </tr>
+                        <tr>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc3" type="text" placeholder={post ? post.nameDoc3 : "nome doc 3"}/></td>
+                            <td><input className="fld" onChange={handleFileChange}  id="doc3" type="file" /></td>
+                        </tr>
+                        <tr>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc4" type="text" placeholder={post ? post.nameDoc4 : "nome doc 4"}/></td>
+                            <td><input className="fld" onChange={handleFileChange}  id="doc4" type="file" /></td>
+                        </tr>
+                        <tr>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc5" type="text" placeholder={post ? post.nameDoc5 : "nome doc 5"}/></td>
+                            <td><input className="fld" onChange={handleFileChange}  id="doc5" type="file" /></td>
                         </tr>
                     </tbody>
                 </table>

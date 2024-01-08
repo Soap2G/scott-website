@@ -203,20 +203,36 @@ const BlogPostPage = () => {
                 <div>
                 {post && (
                           <div>
-                            <div style={{ display: 'flex' }} onClick={() => downloadFile(post.map)}>
-                              <span className='download-btn'> </span>
-                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> Planimetria</span>
-                            </div>
-
+                            {post.nameDoc1 && (
                             <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc1)}>
                               <span className='download-btn'> </span>
-                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> Documento aux 1</span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc1}</span>
                             </div>
-
+                            )}
+                            {post.nameDoc2 && (
                             <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc2)}>
                               <span className='download-btn'> </span>
-                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> Documento aux 2</span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc2}</span>
                             </div>
+                            )}
+                            {post.nameDoc3 && (
+                            <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc3)}>
+                              <span className='download-btn'> </span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc3}</span>
+                            </div>
+                            )}
+                            {post.nameDoc4 && (
+                            <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc4)}>
+                              <span className='download-btn'> </span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc4}</span>
+                            </div>
+                            )}
+                            {post.nameDoc5 && (
+                            <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc5)}>
+                              <span className='download-btn'> </span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc5}</span>
+                            </div>
+                            )}
                           </div>
                 )}
               </div>

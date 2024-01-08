@@ -33,7 +33,7 @@ exports.handler = async (event) => {
         const snapshot = await db.collection('posts').get();
         const data = await Promise.all(snapshot.docs.map(async doc => {
             const postData = doc.data();
-            const fileFields = ['thumb', 'map', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5', 'photos'];
+            const fileFields = ['thumb', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5', 'photos'];
             await Promise.all(fileFields.map(async field => {
                 if (postData[field]) {
                   if (field === 'photos' && Array.isArray(postData[field])) {
@@ -155,14 +155,14 @@ exports.handler = async (event) => {
                             destination: `uploads/${uniqueFolder}/${filename}`
                         });
                         const fileUrl = (await uploadedFile[0].getSignedUrl({ action: 'read', expires: '03-09-2491' }))[0];
-                            if (fieldname.startsWith('photo')) {
-                                if (!updateData.photos) {
-                                  updateData.photos = [];
-                                }
-                                updateData.photos.push(fileUrl);
-                              } else {
-                                updateData[fieldname] = fileUrl;
-                              }
+                        if (fieldname.startsWith('photo')) {
+                            if (!postData.photos) {
+                                postData.photos = [];
+                            }
+                            postData.photos.push(fileUrl);
+                            } else {
+                                postData[fieldname] = fileUrl;
+                            }
                         resolve();
                     });
                     writeStream.on('error', reject);

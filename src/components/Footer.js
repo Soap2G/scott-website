@@ -20,15 +20,25 @@ const Footer = () => {
             <div className="footer-heading">
               Scott SRL
             </div>
-                Viale Gaetano Moreali 11 <br/>
-                41124 MODENA (MO)
+                <span>Viale Gaetano Moreali 11
+                41124 MODENA (MO)</span> <br/>
+                
+                <span
+                style={{ lineHeight: '2rem' }}
+                >P. IVA: 03656540360</span>
           </div>
-          <div className="footer-column">
+          <div
+           style={{ textAlign: 'right' }}
+           className="footer-column">
             <div className="footer-heading">
               Contatti
             </div>
-            email@gmail.com <br/>
-            333 4444444
+            <a 
+            className="footer-link"
+            href="mailto:sandro.cottafava@libero.it">sandro.cottafava@libero.it</a> <br/>
+            <a 
+            className="footer-link"
+            href="tel:+393357110040">+39 335 711 0040</a>
           </div>
         </div>
         <div className="footer-case">

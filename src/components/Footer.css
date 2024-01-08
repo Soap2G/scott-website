@@ -8,12 +8,9 @@
 }
 
 .footer-row {
+    font-size: 1.1rem;
     padding: 1em;
     display: flex;
-    grid-template-columns: repeat(
-        auto-fill,
-        minmax(18px, 1fr)
-    );
     grid-gap: 5vw;
     width: 100%;
 
@@ -45,14 +42,9 @@
 
 .footer-link{
     color: var(--color-text);
-    margin-bottom: 20px;
-    font-size: 18px;
+    margin-bottom: 0.5em;
+    font-weight:400;
     text-decoration: none;
- 
-    &:hover {
-        color: green;
-        transition: 200ms ease-in;
-    }
 }
 
 .box{

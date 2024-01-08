@@ -60,9 +60,13 @@ const CreatePost = () => {
         box: '',
         other: '',
         video: '',
+        nameDoc1: '',
+        nameDoc2: '',
+        nameDoc3: '',
+        nameDoc4: '',
+        nameDoc5: ''
         // other fields as needed
     });
-    const [map, setMap] = useState(null);
     const [doc1, setdoc1] = useState(null);
     const [doc2, setdoc2] = useState(null);
     const [doc3, setdoc3] = useState(null);
@@ -75,13 +79,13 @@ const CreatePost = () => {
     const handleChange = (e) => {
         setSuccessMessage('');
         setPost({ ...post, [e.target.id]: e.target.value });
+        console.log(e.target.id)
+        console.log(e.target.value)
     };
 
     const handleFileChange = (e) => {
         setSuccessMessage('');
-        if (e.target.id === "map") {
-            setMap(e.target.files[0]);
-        } else if (e.target.id === "doc1") {
+        if (e.target.id === "doc1") {
             setdoc1(e.target.files[0]);
         } else if (e.target.id === "doc2") {
             setdoc2(e.target.files[0]);
@@ -102,17 +106,14 @@ const CreatePost = () => {
         e.preventDefault();
         setIsSubmitting(true);
         const formData = new FormData();
-        formData.append('name', post.name);
-        formData.append('description', post.description);
-        formData.append('coordinates', [coordinates.lat,coordinates.lng]);
+        for (let key in post) {
+            formData.append(key, post[key]);
+        }
+        // Special case for coordinates
+        formData.append('coordinates', [coordinates.lat, coordinates.lng]);
+        // Special case for address
         formData.append('address', removeLastWordAndComma(address));
-        formData.append('floorSpace', post.floorSpace);
-        formData.append('locali', post.locali);
-        formData.append('city', post.city);
-        formData.append('box', post.box);
-        formData.append('other', post.other);
-        formData.append('video', post.video);
-        if (map) formData.append('map', map);
+
         if (doc1) formData.append('doc1', doc1);
         if (doc2) formData.append('doc2', doc2);
         if (doc3) formData.append('doc3', doc3);
@@ -124,7 +125,7 @@ const CreatePost = () => {
               formData.append(`photo${index}`, photo);
             });
           }
-        setIsSubmitting(false);
+
         try {
             const response = await fetch('/.netlify/functions/createPost', {
                 method: 'POST',
@@ -135,19 +136,13 @@ const CreatePost = () => {
                 console.log('Post created successfully');
                 setSuccessMessage('Immobile creato correttamente');
                 // Reset form values
-                setPost({
-                    name: '',
-                    coordinates: '',
-                    description: '',
-                    address: '',
-                    floorSpace: '',
-                    locali: '',
-                    city: '',
-                    box: '',
-                    other: '',
-                    video: '',
+                setPost(prevPost => {
+                    let newPost = {...prevPost};
+                    Object.keys(newPost).forEach(key => {
+                        newPost[key] = '';
+                    });
+                    return newPost;
                 });
-                setMap(null);
                 setdoc1(null);
                 setdoc2(null);
                 setdoc3(null);
@@ -155,6 +150,7 @@ const CreatePost = () => {
                 setdoc5(null);
                 setThumb(null);
                 setPhotos(null);
+                setIsSubmitting(false);
             } else {
                 console.error('Failed to create post');
                 // Handle error
@@ -263,16 +259,24 @@ const CreatePost = () => {
                 <table>
                     <tbody>
                         <tr>
-                            <td className="lbl"><label htmlFor="map">Planimetria:</label></td>
-                            <td><input className="fld" onChange={handleFileChange}  id="map" type="file" /></td>
-                        </tr>
-                        <tr>
-                            <td className="lbl"><label htmlFor="map">Planimetria:</label></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc1" type="text" placeholder="nome doc 1"/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc1" type="file" /></td>
                         </tr>
                         <tr>
-                            <td className="lbl"><label htmlFor="map">Planimetria:</label></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc2" type="text" placeholder="nome doc 2"/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc2" type="file" /></td>
+                        </tr>
+                        <tr>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc3" type="text" placeholder="nome doc 3"/></td>
+                            <td><input className="fld" onChange={handleFileChange}  id="doc3" type="file" /></td>
+                        </tr>
+                        <tr>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc4" type="text" placeholder="nome doc 4"/></td>
+                            <td><input className="fld" onChange={handleFileChange}  id="doc4" type="file" /></td>
+                        </tr>
+                        <tr>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc5" type="text" placeholder="nome doc 5"/></td>
+                            <td><input className="fld" onChange={handleFileChange}  id="doc5" type="file" /></td>
                         </tr>
                     </tbody>
                 </table>
