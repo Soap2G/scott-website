@@ -1,11 +1,67 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './ImmobiliPostPage-style.css'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import marker from '../../assets/marker.png'
+import Slider from "react-slick";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
+class SimpleSlider extends Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      nav1: null,
+      nav2: null
+    };
+  }
+
+  componentDidMount() {
+    this.setState({
+      nav1: this.slider1,
+      nav2: this.slider2
+    });
+  }
+
+  render() {
+    return (
+    <div>
+        <div className="case"
+          style={{
+            textAlign: "left"}}
+          >
+            <center>
+              <h2 >
+                Galleria
+              </h2>
+            </center>
+          </div>
+        <div className='main-gallery'>
+        <Slider
+          asNavFor={this.state.nav2}
+          ref={slider => (this.slider1 = slider)}
+        >
+            {this.props.children}
+        </Slider>
+        </div>
+        <div className='thumb-gallery'>
+        <Slider
+          asNavFor={this.state.nav1}
+          ref={slider => (this.slider2 = slider)}
+          slidesToShow={3}
+          swipeToSlide={true}
+          focusOnSelect={true}
+        >
+          {this.props.children}
+        </Slider>
+        </div>
+      </div>
+    );
+  }
+}
 
 const BlogPostPage = () => {
   let { slug } = useParams();
@@ -68,6 +124,18 @@ const BlogPostPage = () => {
     setPost(foundPost);
   }, [slug, listingsData]);
 
+  let photosArray = [];
+  if (post) {
+    try {
+      photosArray = post.photos.map((photoUrl, index) => ({
+      original: photoUrl,
+      thumbnail: photoUrl,
+      originalAlt: `photo ${index + 1}`,
+      thumbnailAlt: `thumbnail ${index + 1}`,
+    }));
+    } catch (err) {}
+  }
+
   return (
     <center>
       {post && post.video ? (
@@ -80,92 +148,107 @@ const BlogPostPage = () => {
           </div>
         </div>
         ) : null}
-      <div className='post-page-container'>
-          <div className="message-title">
-            <center>
-              <h1 >
-              {post ? <span className="message-title">{post.address}</span> : 'Loading...'}
-              </h1>
-            </center>
-          </div>
-          <div className="case"> 
-              <p>
-                {post ? `${post.locali} locali | ${post.floorSpace} ${squareMeters}` : 'Loading...'}
-              </p>
-          </div>
-          <div className="case"
-          style={{
-            textAlign: "left"}}
-          >
-              <h2 >
-                Descrizione
-              </h2>
-              <p>
-                {post ? post.description : 'Loading...'}
-              </p>
-          </div>
 
-          <div className="case"
-          style={{
-            textAlign: "left",
-            marginTop: "2em"
-          }}
-          >
-              <h2 >
-                Altre informazioni
-              </h2>
-              <p>
-                {post ? post.other : 'Loading...'}
-              </p>
-          </div>
+            <div className="message-title">
+              <center>
+                <h1 >
+                {post ? <span className="message-title">{post.address}</span> : 'Loading...'}
+                </h1>
+              </center>
+            </div>
+            <div className="case"> 
+                <p>
+                  {post ? `${post.locali} locali | ${post.floorSpace} ${squareMeters}` : 'Loading...'}
+                </p>
+            </div>
+      <div className='parent-container'>
+        <div className='post-page-container'>
+            
+            <div className="case"
+            style={{
+              textAlign: "left"}}
+            >
+                <h2 >
+                  Descrizione
+                </h2>
+                <p>
+                  {post ? post.description : 'Loading...'}
+                </p>
+            </div>
 
-          <hr />
-          <div className="case"
-          style={{
-            textAlign: "left",
-            marginTop: "2em"
-          }}
-          >
-              <h2 >
-                Documentazione
-              </h2>
-              <div>
-              {post && (
-                        <div>
-                          <div style={{ display: 'flex' }} onClick={() => downloadFile(post.map)}>
-                            <span className='download-btn'> </span>
-                            <span style={{lineHeight: '2em', cursor: 'pointer'}}> Planimetria</span>
+            <div className="case"
+            style={{
+              textAlign: "left",
+              marginTop: "2em"
+            }}
+            >
+                <h2 >
+                  Altre informazioni
+                </h2>
+                <p>
+                  {post ? post.other : 'Loading...'}
+                </p>
+            </div>
+
+            <hr />
+            <div className="case"
+            style={{
+              textAlign: "left",
+              marginTop: "2em"
+            }}
+            >
+                <h2 >
+                  Documentazione
+                </h2>
+                <div>
+                {post && (
+                          <div>
+                            <div style={{ display: 'flex' }} onClick={() => downloadFile(post.map)}>
+                              <span className='download-btn'> </span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> Planimetria</span>
+                            </div>
+
+                            <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc1)}>
+                              <span className='download-btn'> </span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> Documento aux 1</span>
+                            </div>
+
+                            <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc2)}>
+                              <span className='download-btn'> </span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> Documento aux 2</span>
+                            </div>
                           </div>
-
-                          <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc1)}>
-                            <span className='download-btn'> </span>
-                            <span style={{lineHeight: '2em', cursor: 'pointer'}}> Documento aux 1</span>
-                          </div>
-
-                          <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc2)}>
-                            <span className='download-btn'> </span>
-                            <span style={{lineHeight: '2em', cursor: 'pointer'}}> Documento aux 2</span>
-                          </div>
-                        </div>
-              )}
+                )}
               </div>
+            </div>
+        </div>
+        <div className='map-immobile'>
+        {post && (
+          <MapContainer center={[post.coordinates.split(',')[0], post.coordinates.split(',')[1]]} zoom={16} style={{ height: "100%" }}>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            />
+            <Marker position={[post.coordinates.split(',')[0], post.coordinates.split(',')[1]]} icon={myIcon}>
+              <Popup>
+              {post.address}
+              </Popup>
+            </Marker>
+          </MapContainer>
+        )}
+        </div>
+      </div>
+      {photosArray.length > 0 && (
+          <div style={{marginTop: '5em'}}>
+            <SimpleSlider>
+              {photosArray.map((photo, index) => (
+                <div key={index}>
+                  <img src={photo.original} alt={photo.originalAlt} />
+                </div>
+              ))}
+            </SimpleSlider>
           </div>
-      </div>
-      <div className='map-immobile'>
-      {post && (
-        <MapContainer center={[post.coordinates.split(',')[0], post.coordinates.split(',')[1]]} zoom={16} style={{ height: "100%", width: "100%" }}>
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          />
-          <Marker position={[post.coordinates.split(',')[0], post.coordinates.split(',')[1]]} icon={myIcon}>
-            <Popup>
-            {post.address}
-            </Popup>
-          </Marker>
-        </MapContainer>
-      )}
-      </div>
+        )}
     </center>
   );
 };

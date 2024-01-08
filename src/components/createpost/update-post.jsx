@@ -9,6 +9,7 @@ const UpdatePost = () => {
 // Find id of the db entry
 let { updateSlug } = useParams();
 const [listingsData, setListingsData] = useState([]);
+const [isSubmitting, setIsSubmitting] = useState(false);
 
 const [post, setPost] = useState(null);
 
@@ -111,13 +112,15 @@ const handleFileChange = (e) => {
     } else if (e.target.id === "thumb") {
         setThumb(e.target.files[0]);
     } else if (e.target.id === "photos") {
-        setPhotos(e.target.files[0]);
+        // console.log(e.target.files)
+        setPhotos(Array.from(e.target.files));
+        // console.log(photos)
     }
 };
 
 const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsSubmitting(true);
     const formData = new FormData();
     formData.append('name', post.name);
     formData.append('description', post.description);
@@ -136,7 +139,13 @@ const handleSubmit = async (e) => {
     if (doc4) formData.append('doc4', doc4);
     if (doc5) formData.append('doc5', doc5);
     if (thumb) formData.append('thumb', thumb);
-    if (photos) formData.append('photos', photos);
+    if (photos) {
+        photos.forEach((photo, index) => {
+          formData.append(`photo${index}`, photo);
+        });
+      }
+
+    // console.log(formData)
 
     try {
         const response = await fetch(`/.netlify/functions/createPost/${post.id}`, {
@@ -168,6 +177,7 @@ const handleSubmit = async (e) => {
             setdoc5(null);
             setThumb(null);
             setPhotos(null);
+            setIsSubmitting(false);
         } else {
             console.error('Failed to update post');
             // Handle error
@@ -338,7 +348,8 @@ if (!isLoaded) return <div>Loading...</div>;
           id="submit"
           type="submit" 
           value="Aggiorna"
-          style={{ cursor: 'pointer', fontWeight: "bold" }}
+          disabled={isSubmitting}
+          style={isSubmitting ? { cursor: 'not-allowed', fontWeight: "bold", backgroundColor: 'grey' } : { cursor: 'pointer', fontWeight: "bold" }}
           />
         </form>
         {successMessage && <div className='success-message'>{successMessage}</div>}

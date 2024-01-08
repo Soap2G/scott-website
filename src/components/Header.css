@@ -55,8 +55,9 @@
   /* Hiding the dropdown content by default */
   .dropdown-content {
     display: none;
-    position: absolute; /* To position dropdown content correctly */
-    /* Style your dropdown content (background, color, etc.) */
+    position: absolute; 
+    border-radius: 5px;
+    background-color: var(--color-background);
   }
   
   /* Displaying the dropdown content when hovering over the dropdown button */

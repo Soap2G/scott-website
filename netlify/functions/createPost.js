@@ -36,10 +36,17 @@ exports.handler = async (event) => {
             const fileFields = ['thumb', 'map', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5', 'photos'];
             await Promise.all(fileFields.map(async field => {
                 if (postData[field]) {
+                  if (field === 'photos' && Array.isArray(postData[field])) {
+                    // Handle 'photos' as an array
+                    postData[field] = await Promise.all(postData[field].map(async photoPath => {
+                      const file = storage.file(photoPath);
+                      return file.name;
+                    }));
+                  } else {
+                    // Handle other fields as before
                     const file = storage.file(`${postData[field]}`);
-                    // const url = await file.getSignedUrl({ action: 'read', expires: '03-09-2491' });
-                    // postData[field] = url[0];
                     postData[field] = file.name;
+                  }
                 }
             }));
             return { id: doc.id, ...postData };
@@ -48,7 +55,7 @@ exports.handler = async (event) => {
     } else if (event.httpMethod === 'PUT') {
         // Handle PUT request
         return new Promise((resolve, reject) => {
-            const busboy = new Busboy({ headers: event.headers });
+            const busboy = new Busboy({ headers: event.headers, multiples: true });
             const tmpdir = os.tmpdir();
             let updateData = {};
             let fileWrites = [];
@@ -78,7 +85,15 @@ exports.handler = async (event) => {
                                 destination: `uploads/${updateFolder}/${filename}`
                             });
                             const fileUrl = (await uploadedFile[0].getSignedUrl({ action: 'read', expires: '03-09-2491' }))[0];
-                            updateData[fieldname] = fileUrl;
+                            // console.log(fileUrl)
+                            if (fieldname.startsWith('photo')) {
+                                if (!updateData.photos) {
+                                  updateData.photos = [];
+                                }
+                                updateData.photos.push(fileUrl);
+                              } else {
+                                updateData[fieldname] = fileUrl;
+                              }
                             resolve();
                         } catch (error) {
                             reject(error);
@@ -140,7 +155,14 @@ exports.handler = async (event) => {
                             destination: `uploads/${uniqueFolder}/${filename}`
                         });
                         const fileUrl = (await uploadedFile[0].getSignedUrl({ action: 'read', expires: '03-09-2491' }))[0];
-                        postData[fieldname] = fileUrl;
+                            if (fieldname.startsWith('photo')) {
+                                if (!updateData.photos) {
+                                  updateData.photos = [];
+                                }
+                                updateData.photos.push(fileUrl);
+                              } else {
+                                updateData[fieldname] = fileUrl;
+                              }
                         resolve();
                     });
                     writeStream.on('error', reject);

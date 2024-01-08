@@ -5,7 +5,7 @@ import { useLoadScript, Autocomplete } from '@react-google-maps/api';
 const libraries = ["places"];
 
 const CreatePost = () => {
-
+    const [isSubmitting, setIsSubmitting] = useState(false);
     function removeLastWordAndComma(address) {
         let parts = address.split(','); // Split the address by comma
         if (parts.length > 1) {
@@ -100,7 +100,7 @@ const CreatePost = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setIsSubmitting(true);
         const formData = new FormData();
         formData.append('name', post.name);
         formData.append('description', post.description);
@@ -119,8 +119,12 @@ const CreatePost = () => {
         if (doc4) formData.append('doc4', doc4);
         if (doc5) formData.append('doc5', doc5);
         if (thumb) formData.append('thumb', thumb);
-        if (photos) formData.append('photos', photos);
-
+        if (photos) {
+            photos.forEach((photo, index) => {
+              formData.append(`photo${index}`, photo);
+            });
+          }
+        setIsSubmitting(false);
         try {
             const response = await fetch('/.netlify/functions/createPost', {
                 method: 'POST',
@@ -322,7 +326,8 @@ const CreatePost = () => {
           id="submit"
           type="submit" 
           value="Crea"
-          style={{ cursor: 'pointer', fontWeight: "bold" }}
+          disabled={isSubmitting}
+          style={isSubmitting ? { cursor: 'not-allowed', fontWeight: "bold", backgroundColor: 'grey' } : { cursor: 'pointer', fontWeight: "bold" }}
           />
         </form>
         {successMessage && <div className='success-message'>{successMessage}</div>}
