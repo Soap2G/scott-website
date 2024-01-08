@@ -80,7 +80,7 @@ const BlogPostPage = () => {
 
     // Get the filename
     const uploadsIndex = segments.indexOf('uploads');
-    const filename = segments[uploadsIndex + 2].split('?')[0];
+    const filename = decodeURIComponent(segments[uploadsIndex + 2].split('?')[0]);
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -203,34 +203,34 @@ const BlogPostPage = () => {
                 <div>
                 {post && (
                           <div>
-                            {post.nameDoc1 && (
+                            {post.doc1 && (
                             <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc1)}>
                               <span className='download-btn'> </span>
-                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc1}</span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc1 ? post.nameDoc1 : "Documento"}</span>
                             </div>
                             )}
-                            {post.nameDoc2 && (
+                            {post.doc2 && (
                             <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc2)}>
                               <span className='download-btn'> </span>
-                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc2}</span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc2 ? post.nameDoc2 : "Documento"}</span>
                             </div>
                             )}
-                            {post.nameDoc3 && (
+                            {post.doc3 && (
                             <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc3)}>
                               <span className='download-btn'> </span>
-                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc3}</span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc3 ? post.nameDoc3 : "Documento"}</span>
                             </div>
                             )}
-                            {post.nameDoc4 && (
+                            {post.doc4 && (
                             <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc4)}>
                               <span className='download-btn'> </span>
-                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc4}</span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc4 ? post.nameDoc4 : "Documento"}</span>
                             </div>
                             )}
-                            {post.nameDoc5 && (
+                            {post.doc5 && (
                             <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc5)}>
                               <span className='download-btn'> </span>
-                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc5}</span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc5 ? post.nameDoc5 : "Documento"}</span>
                             </div>
                             )}
                           </div>
