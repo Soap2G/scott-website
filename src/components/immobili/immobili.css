@@ -120,18 +120,6 @@ min-height: 15em;
 border-radius: 5px;
 }
 
-.listing-img {
-    color: #fff;
-    padding: 15px;
-    position: relative;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-}
 #listings .listings-results .listing-img:hover .details {
 opacity: 1;
 }
