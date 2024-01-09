@@ -195,7 +195,7 @@ const CreatePost = () => {
                         </tr>
                         <tr>
                             <td className="lbl"><label htmlFor="description">Descrizione:</label></td>
-                            <td><textarea style={{ width: '100%'}} onChange={handleChange}  id="description" type="text" placeholder="..." /></td>
+                            <td><textarea style={{ width: '100%'}} onChange={handleChange}  id="description" type="text" placeholder="..." required/></td>
                             <td></td>
                         </tr>
                         <tr>

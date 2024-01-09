@@ -90,7 +90,7 @@ const CreatePost = () => {
                     <div className="listing">
                         <div className="listing-img" style={{ background: `url("${listing.thumb}") no-repeat center center` }} key={index}>    
                           <div className="address" style={{bottom: '25%'}}>{listing.name}</div>
-                          <div className="address">{listing.address}</div>
+                          <div className="address">{listing.altAddress ? listing.altAddress : listing.address}</div>
                           <div className="details">
                           <center style={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center', gap: '1em' }}>
                                 <Link to={`/modifica/${listing.id}`}>

@@ -230,7 +230,7 @@ if (!isLoaded) return <div>Loading...</div>;
                         </td>
                             <td>
                                 {isCheckboxChecked && (
-                                    <input style={{ width: '100%'}} onChange={handleChange}  id="altAddress" type="text" placeholder={post ? (post.altAddress ? post.altAddress : post.address) : "Via/Piazza/Strada"} />
+                                    <input style={{ width: '100%'}} onChange={handleChange}  id="altAddress" type="text" value={post && post.altAddress ? post.altAddress : ''} placeholder={post && post.altAddress ? '' : post.address} />
                                 )}
                             </td>
                             

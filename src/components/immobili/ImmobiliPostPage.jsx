@@ -103,7 +103,7 @@ const BlogPostPage = () => {
         document.body.removeChild(anchor);
         window.URL.revokeObjectURL(blobUrl);
     } catch (error) {
-        console.error('Error downloading the file:', error);
+        console.error('Error downCaricamento the file:', error);
     }
   };
 
@@ -152,7 +152,7 @@ const BlogPostPage = () => {
             <div className="message-title">
               <center>
                 <h1 >
-                {post ? <span className="message-title">{post.altAddress ? post.altAddress : post.address}</span> : 'Loading...'}
+                {post ? <span className="message-title">{post.altAddress ? post.altAddress : post.address}</span> : 'Caricamento...'}
                 </h1>
               </center>
             </div>
@@ -174,7 +174,7 @@ const BlogPostPage = () => {
             <p>
                 {post ? post.description.split('\n').map((item, key) => {
                     return <span key={key}>{item}<br/></span>
-                }) : 'Loading...'}
+                }) : 'Caricamento...'}
             </p>
         </div>
 
