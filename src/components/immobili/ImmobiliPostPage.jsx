@@ -152,57 +152,63 @@ const BlogPostPage = () => {
             <div className="message-title">
               <center>
                 <h1 >
-                {post ? <span className="message-title">{post.address}</span> : 'Loading...'}
+                {post ? <span className="message-title">{post.altAddress ? post.altAddress : post.address}</span> : 'Loading...'}
                 </h1>
               </center>
             </div>
             <div className="case"> 
                 <p>
-                  {post ? `${post.locali} locali | ${post.floorSpace} ${squareMeters}` : 'Loading...'}
+                  {post && post.locali ? `${post.locali} locali |` : '' }{post && post.floorSpace ? `${post.floorSpace} ${squareMeters}` : ''}
                 </p>
             </div>
       <div className='parent-container'>
         <div className='post-page-container'>
             
-            <div className="case"
+        <div className="case"
             style={{
-              textAlign: "left"}}
+                textAlign: "left"}}
             >
-                <h2 >
-                  Descrizione
-                </h2>
-                <p>
-                  {post ? post.description : 'Loading...'}
-                </p>
-            </div>
+            <h2>
+                Descrizione
+            </h2>
+            <p>
+                {post ? post.description.split('\n').map((item, key) => {
+                    return <span key={key}>{item}<br/></span>
+                }) : 'Loading...'}
+            </p>
+        </div>
 
+            {post && post.other && (
+              <div className="case"
+              style={{
+                textAlign: "left",
+                marginTop: "2em"
+              }}
+              >
+                  <h2 >
+                    Altre informazioni
+                  </h2>
+                  <p>
+                    {post.other}
+                  </p>
+              </div>
+            )}
+
+            
+            
             <div className="case"
             style={{
               textAlign: "left",
               marginTop: "2em"
             }}
             >
-                <h2 >
-                  Altre informazioni
-                </h2>
-                <p>
-                  {post ? post.other : 'Loading...'}
-                </p>
-            </div>
-
-            <hr />
-            <div className="case"
-            style={{
-              textAlign: "left",
-              marginTop: "2em"
-            }}
-            >
-                <h2 >
-                  Documentazione
-                </h2>
                 <div>
-                {post && (
+                {post && (post.doc1 || post.doc2 || post.doc3 || post.doc4 || post.doc5) && (
                           <div>
+                            <hr />
+                            <h2 >
+                              Documentazione
+                            </h2>
                             {post.doc1 && (
                             <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc1)}>
                               <span className='download-btn'> </span>

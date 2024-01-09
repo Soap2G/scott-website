@@ -49,24 +49,26 @@ const CreatePost = () => {
     };
 
 
-    const [post, setPost] = useState({
-        name: '',
-        coordinates: '',
-        description: '',
-        address: '',
-        floorSpace: '',
-        locali: '',
-        city: '',
-        box: '',
-        other: '',
-        video: '',
-        nameDoc1: '',
-        nameDoc2: '',
-        nameDoc3: '',
-        nameDoc4: '',
-        nameDoc5: ''
-        // other fields as needed
-    });
+    // const [post, setPost] = useState({
+    //     name: '',
+    //     coordinates: '',
+    //     description: '',
+    //     address: '',
+    //     floorSpace: '',
+    //     locali: '',
+    //     city: '',
+    //     box: '',
+    //     other: '',
+    //     video: '',
+    //     nameDoc1: '',
+    //     nameDoc2: '',
+    //     nameDoc3: '',
+    //     nameDoc4: '',
+    //     nameDoc5: ''
+    //     // other fields as needed
+    // });
+    const [post, setPost] = useState('');
+
     const [doc1, setdoc1] = useState(null);
     const [doc2, setdoc2] = useState(null);
     const [doc3, setdoc3] = useState(null);
@@ -79,8 +81,6 @@ const CreatePost = () => {
     const handleChange = (e) => {
         setSuccessMessage('');
         setPost({ ...post, [e.target.id]: e.target.value });
-        console.log(e.target.id)
-        console.log(e.target.value)
     };
 
     const handleFileChange = (e) => {
@@ -113,6 +113,7 @@ const CreatePost = () => {
         formData.append('coordinates', [coordinates.lat, coordinates.lng]);
         // Special case for address
         formData.append('address', removeLastWordAndComma(address));
+
 
         if (doc1) formData.append('doc1', doc1);
         if (doc2) formData.append('doc2', doc2);
@@ -163,6 +164,7 @@ const CreatePost = () => {
 
 
     let squareMeters = 'm\u00B2';
+    const [isCheckboxChecked, setCheckboxChecked] = useState(false);
 
     if (!isLoaded) return <div>Loading...</div>;
 
@@ -214,12 +216,25 @@ const CreatePost = () => {
                                 />
                             </Autocomplete>
                             </td>
-                            {/* <td><input className="fld" onChange={handleChange}  id="address" type="text" placeholder="Via/Piazza/Strada" /></td> */}
                         </tr>
-                        {/* <tr>
-                            <td className="lbl"><label htmlFor="floorSpace">Superficie:</label></td>
-                            <td><input className="fld" onChange={handleChange}  id="floorSpace" type="text" placeholder={squareMeters}/></td>
-                        </tr> */}
+                        {address && (
+                            <tr>
+                            <td className="lbl" style={{ display: 'flex', alignItems: 'center' }}>
+                                <label htmlFor="modifyAddress" style={{ marginRight: '0.5em' }}>Modifica indirizzo</label>
+                                <input type="checkbox" id="modifyAddress" onChange={() => {
+                                    setCheckboxChecked(!isCheckboxChecked);
+                                    if (isCheckboxChecked) {
+                                        setPost(prevPost => ({ ...prevPost, altAddress: '' }));
+                                    }
+                                }} />
+                            </td>
+                                <td>
+                                    {isCheckboxChecked && (
+                                        <input style={{ width: '100%'}} onChange={handleChange}  id="altAddress" type="text" placeholder={address ? address : "Via/Piazza/Strada"} />
+                                    )}
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

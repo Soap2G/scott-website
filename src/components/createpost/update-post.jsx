@@ -11,7 +11,7 @@ let { updateSlug } = useParams();
 const [listingsData, setListingsData] = useState([]);
 const [isSubmitting, setIsSubmitting] = useState(false);
 
-const [post, setPost] = useState(null);
+const [post, setPost] = useState('');
 
 const [doc1, setdoc1] = useState(null);
 const [doc2, setdoc2] = useState(null);
@@ -175,6 +175,7 @@ const handleSubmit = async (e) => {
 
 
 let squareMeters = 'm\u00B2';
+const [isCheckboxChecked, setCheckboxChecked] = useState(false);
 
 if (!isLoaded) return <div>Loading...</div>;
 
@@ -201,11 +202,11 @@ if (!isLoaded) return <div>Loading...</div>;
                     <tbody>
                         <tr>
                             <td className="lbl"><label htmlFor="name">Titolo:</label></td>
-                            <td><input className="fld" onChange={handleChange}  id="name" type="text" placeholder={post ? post.name : "Casa indipendente"}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="name" type="text" value={post && post.name ? post.name : ''} placeholder={post && post.name ? '' : 'Casa indipendente'}/></td>
                         </tr>
                         <tr>
                             <td className="lbl"><label htmlFor="description">Descrizione:</label></td>
-                            <td><textarea style={{ width: '100%'}} onChange={handleChange}  id="description" type="text" placeholder={post ? post.description : "..."} /></td>
+                            <td><textarea style={{ width: '100%'}} onChange={handleChange}  id="description" type="text" value={post && post.description ? post.description : ''} placeholder={post && post.description ? '' : '...'} /></td>
                             <td></td>
                         </tr>
                         <tr>
@@ -225,12 +226,24 @@ if (!isLoaded) return <div>Loading...</div>;
                                 />
                             </Autocomplete>
                             </td>
-                            {/* <td><input className="fld" onChange={handleChange}  id="address" type="text" placeholder="Via/Piazza/Strada" /></td> */}
                         </tr>
-                        {/* <tr>
-                            <td className="lbl"><label htmlFor="floorSpace">Superficie:</label></td>
-                            <td><input className="fld" onChange={handleChange}  id="floorSpace" type="text" placeholder={squareMeters}/></td>
-                        </tr> */}
+                        <tr>
+                        <td className="lbl" style={{ display: 'flex', alignItems: 'center' }}>
+                            <label htmlFor="modifyAddress" style={{ marginRight: '0.5em' }}>Modifica indirizzo</label>
+                            <input type="checkbox" id="modifyAddress" onChange={() => {
+                                setCheckboxChecked(!isCheckboxChecked);
+                                if (isCheckboxChecked) {
+                                    setPost(prevPost => ({ ...prevPost, altAddress: '' }));
+                                }
+                            }} />
+                        </td>
+                            <td>
+                                {isCheckboxChecked && (
+                                    <input style={{ width: '100%'}} onChange={handleChange}  id="altAddress" type="text" placeholder={post ? (post.altAddress ? post.altAddress : post.address) : "Via/Piazza/Strada"} />
+                                )}
+                            </td>
+                            
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -240,11 +253,11 @@ if (!isLoaded) return <div>Loading...</div>;
                     <tbody>
                         <tr>
                             <td className="lbl"><label htmlFor="locali">Locali:</label></td>
-                            <td><input className="fld" onChange={handleChange}  id="locali" type="text" placeholder={post ? post.locali : "0, 3-5"} /></td>
+                            <td><input className="fld" onChange={handleChange}  id="locali" type="text" value={post && post.locali ? post.locali : ''} placeholder={post && post.locali ? '' : '0, 3-5'} /></td>
                         </tr>
                         <tr>
                             <td className="lbl"><label htmlFor="floorSpace">Superficie:</label></td>
-                            <td><input className="fld" onChange={handleChange}  id="floorSpace" type="text" placeholder={post ? post.floorSpace : {squareMeters}}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="floorSpace" type="text" value={post && post.floorSpace ? post.floorSpace : ''} placeholder={post && post.floorSpace ? '' : {squareMeters}}/></td>
                         </tr>
                         {/* <tr>
                             <td className="lbl"><label htmlFor="city">Città:</label></td>
@@ -256,7 +269,7 @@ if (!isLoaded) return <div>Loading...</div>;
                         </tr> */}
                         <tr>
                             <td className="lbl"><label htmlFor="other">Altro:</label></td>
-                            <td><input className="fld" onChange={handleChange}  id="other" type="text" placeholder={post ? post.other : "Giardino, ascensore..."}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="other" type="text" value={post && post.other ? post.other : ''} placeholder={post && post.other ? '' : 'Giardino, ascensore...'}/></td>
                         </tr>
                     </tbody>
                 </table>
@@ -270,23 +283,23 @@ if (!isLoaded) return <div>Loading...</div>;
                 <table>
                     <tbody>
                         <tr>
-                            <td><input className="fld" onChange={handleChange}  id="nameDoc1" type="text" placeholder={post ? post.nameDoc1 : "nome doc 1"}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc1" type="text" value={post && post.nameDoc1 ? post.nameDoc1 : ''} placeholder={post && post.nameDoc1 ? '' : 'nome doc 1'}/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc1" type="file" /></td>
                         </tr>
                         <tr>
-                            <td><input className="fld" onChange={handleChange}  id="nameDoc2" type="text" placeholder={post ? post.nameDoc2 : "nome doc 2"}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc2" type="text" value={post && post.nameDoc2 ? post.nameDoc2 : ''} placeholder={post && post.nameDoc2 ? '' : 'nome doc 2'}/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc2" type="file" /></td>
                         </tr>
                         <tr>
-                            <td><input className="fld" onChange={handleChange}  id="nameDoc3" type="text" placeholder={post ? post.nameDoc3 : "nome doc 3"}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc3" type="text" value={post && post.nameDoc3 ? post.nameDoc3 : ''} placeholder={post && post.nameDoc3 ? '' : 'nome doc 3'}/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc3" type="file" /></td>
                         </tr>
                         <tr>
-                            <td><input className="fld" onChange={handleChange}  id="nameDoc4" type="text" placeholder={post ? post.nameDoc4 : "nome doc 4"}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc4" type="text" value={post && post.nameDoc4 ? post.nameDoc4 : ''} placeholder={post && post.nameDoc4 ? '' : 'nome doc 4'}/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc4" type="file" /></td>
                         </tr>
                         <tr>
-                            <td><input className="fld" onChange={handleChange}  id="nameDoc5" type="text" placeholder={post ? post.nameDoc5 : "nome doc 5"}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc5" type="text" value={post && post.nameDoc5 ? post.nameDoc5 : ''} placeholder={post && post.nameDoc5 ? '' : 'nome doc 5'}/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc5" type="file" /></td>
                         </tr>
                     </tbody>
@@ -329,7 +342,7 @@ if (!isLoaded) return <div>Loading...</div>;
                         </tr>
                         <tr>
                             <td className="lbl"><label htmlFor="map">Link video:</label></td>
-                            <td><input className="fld" onChange={handleChange}  id="video" type="text" placeholder={post ? post.video : "..."}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="video" type="text" value={post && post.video ? post.video : ''} placeholder={post && post.video ? '' : '...'}/></td>
                         </tr>
                     </tbody>
                 </table>

@@ -1,6 +1,10 @@
+#modifyAddress {
+    width: 25px;
+}
+
 .lbl {
     text-align: right;
-    width: 100px;
+    /* width: 100px; */
     white-space: nowrap;
 }
 
