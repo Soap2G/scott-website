@@ -127,7 +127,7 @@ export const Message = () => {
           type="submit" 
           value={t('send')}
           disabled={!isRecaptchaReady || isSubmitting} 
-          style={{ cursor: 'pointer', fontWeight: "bold" }}
+          style={isSubmitting ? { cursor: 'not-allowed', fontWeight: "bold", backgroundColor: 'grey' } : { cursor: 'pointer', fontWeight: "bold" }}
           />
           {submissionMessage && <div className={hasSubmitted ? 'success-message' : 'error-message'}>{submissionMessage}</div>}
           </form>
