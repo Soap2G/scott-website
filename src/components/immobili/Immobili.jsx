@@ -61,7 +61,7 @@ const Immobili = () => {
                     <div className="listing">
                         <div className="listing-img" style={{ background: `url("${listing.thumb}") no-repeat center center`, backgroundSize: 'cover' }} key={index}>    
                           <div className="address" style={{bottom: '25%'}}>{listing.name}</div>
-                          <div className="address">{listing.address}</div>
+                          <div className="address">{listing.altAddress ? listing.altAddress : listing.address}</div>
                           <div className="details">
                             {/* <div className="my-col">
                               <img className="user-img-box" src={listing.userImg} alt="" />
@@ -72,7 +72,7 @@ const Immobili = () => {
                               </div>
                               <div className="listing-details">
                                 <div className="floor-space">
-                                  {listing.address}
+                                  {listing.altAddress ? listing.altAddress : listing.address}
                                 </div>
                                 {/* <hr style={{color: 'var(--selection-color)'}}/> */}
                                 <span className="floor-space">
