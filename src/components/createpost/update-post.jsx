@@ -188,15 +188,6 @@ if (!isLoaded) return <div>Loading...</div>;
         <form onSubmit={handleSubmit} encType="multipart/form-data">
         <fieldset>
             <legend>Proprietà</legend>
-            {/* <table>
-                <tbody>
-                    <tr>
-                        <td className="lbl"><label htmlFor="description">Descrizione:</label></td>
-                        <td><textarea style={{ width: '100%'}} onChange={handleChange}  id="description" type="text" placeholder="..." /></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table> */}
             <div className="frm">
                 <table>
                     <tbody>
