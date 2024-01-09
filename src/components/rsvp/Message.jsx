@@ -90,7 +90,7 @@ export const Message = () => {
       return;
     }
 
-    emailjs.sendForm('service_8ls5cyj', 'template_d3ic149', form.current, "9477ur8cVpY-mQuB7")
+    emailjs.sendForm('service_jeht0nm', 'template_d3ic149', form.current, "9477ur8cVpY-mQuB7")
       .then((result) => {
           console.log(result.text);
           setSubmissionMessage("Grazie, la mail è stata inviata con successo");
