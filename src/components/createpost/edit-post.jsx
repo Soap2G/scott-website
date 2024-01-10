@@ -14,25 +14,28 @@ const CreatePost = () => {
     try {
       // Delete the document
       await deleteDoc(doc(db, "posts", id));
-    //   console.log("Document successfully deleted!");
+      // console.log("Document successfully deleted!");
   
       // Delete the folder in storage
       const storage = getStorage();
       const folderRef = ref(storage, `/uploads/${uniqueFolder}`);
+      // console.log(folderRef)
   
       // List all files in the folder
       const res = await listAll(folderRef);
   
       // Delete all files in the folder
-      res.items.forEach((itemRef) => {
-        deleteObject(itemRef);
+      const deletePromises = res.items.map((itemRef) => {
+        return deleteObject(itemRef);
       });
   
-    //   console.log("Folder successfully deleted!");
-      window.location.reload();
+      await Promise.all(deletePromises);
+  
+      // console.log("Folder successfully deleted!");
     } catch (error) {
-    //   console.error("Error removing document or folder: ", error);
+      console.error("Error removing document or folder: ", error);
     }
+    window.location.reload();
   }
 
   useEffect(() => {
