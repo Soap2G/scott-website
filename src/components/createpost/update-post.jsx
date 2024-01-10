@@ -302,23 +302,23 @@ if (!isLoaded) return <div>Loading...</div>;
                 <table>
                     <tbody>
                         <tr>
-                            <td><input className="fld" onChange={handleChange}  id="nameDoc1" type="text" value={post && post.nameDoc1 ? post.nameDoc1 : ''} placeholder={post && post.nameDoc1 ? '' : post.doc1Name}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc1" type="text" value={post && post.nameDoc1 ? post.nameDoc1 : ''} placeholder={post && post.nameDoc1 ? '' : (post && post.doc1Name ? post.doc1Name : 'documento 1')}/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc1" type="file" /></td>
                         </tr>
                         <tr>
-                            <td><input className="fld" onChange={handleChange}  id="nameDoc2" type="text" value={post && post.nameDoc2 ? post.nameDoc2 : ''} placeholder={post && post.nameDoc2 ? '' : post.doc2Name}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc2" type="text" value={post && post.nameDoc2 ? post.nameDoc2 : ''} placeholder={post && post.nameDoc2 ? '' : (post && post.doc2Name ? post.doc2Name : 'documento 2')}/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc2" type="file" /></td>
                         </tr>
                         <tr>
-                            <td><input className="fld" onChange={handleChange}  id="nameDoc3" type="text" value={post && post.nameDoc3 ? post.nameDoc3 : ''} placeholder={post && post.nameDoc3 ? '' : post.doc3Name}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc3" type="text" value={post && post.nameDoc3 ? post.nameDoc3 : ''} placeholder={post && post.nameDoc3 ? '' : (post && post.doc3Name ? post.doc3Name : 'documento 3')}/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc3" type="file" /></td>
                         </tr>
                         <tr>
-                            <td><input className="fld" onChange={handleChange}  id="nameDoc4" type="text" value={post && post.nameDoc4 ? post.nameDoc4 : ''} placeholder={post && post.nameDoc4 ? '' : post.doc4Name}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc4" type="text" value={post && post.nameDoc4 ? post.nameDoc4 : ''} placeholder={post && post.nameDoc4 ? '' : (post && post.doc4Name ? post.doc4Name : 'documento 4')}/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc4" type="file" /></td>
                         </tr>
                         <tr>
-                            <td><input className="fld" onChange={handleChange}  id="nameDoc5" type="text" value={post && post.nameDoc5 ? post.nameDoc5 : ''} placeholder={post && post.nameDoc5 ? '' : post.doc5Name}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc5" type="text" value={post && post.nameDoc5 ? post.nameDoc5 : ''} placeholder={post && post.nameDoc5 ? '' : (post && post.doc5Name ? post.doc5Name : 'documento 5')}/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc5" type="file" /></td>
                         </tr>
                     </tbody>

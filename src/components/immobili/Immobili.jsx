@@ -30,11 +30,16 @@ const Immobili = () => {
                 </center>
             </div>
             <section className="listings-results">
+            <center>
                 <h2 >
-                    <center>
-                        Nessun immobile trovato
-                    </center>
+                    Caricamento immobili...
                 </h2>
+                <div className="spinner">
+                    <div className="bounce1"></div>
+                    <div className="bounce2"></div>
+                    <div className="bounce3"></div>
+                </div>
+              </center>
             </section>
       </section>
     );
