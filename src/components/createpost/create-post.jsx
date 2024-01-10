@@ -49,29 +49,37 @@ const CreatePost = () => {
     };
 
 
-    const [post, setPost] = useState({
-        name: '',
-        coordinates: '',
-        description: '',
-        address: '',
-        floorSpace: '',
-        locali: '',
-        city: '',
-        box: '',
-        other: '',
-        video: '',
-        nameDoc1: '',
-        nameDoc2: '',
-        nameDoc3: '',
-        nameDoc4: '',
-        nameDoc5: ''
-        // other fields as needed
-    });
+    // const [post, setPost] = useState({
+    //     name: '',
+    //     coordinates: '',
+    //     description: '',
+    //     address: '',
+    //     floorSpace: '',
+    //     locali: '',
+    //     city: '',
+    //     box: '',
+    //     other: '',
+    //     video: '',
+    //     nameDoc1: '',
+    //     nameDoc2: '',
+    //     nameDoc3: '',
+    //     nameDoc4: '',
+    //     nameDoc5: ''
+    //     // other fields as needed
+    // });
+    const [post, setPost] = useState('');
+
     const [doc1, setdoc1] = useState(null);
     const [doc2, setdoc2] = useState(null);
     const [doc3, setdoc3] = useState(null);
     const [doc4, setdoc4] = useState(null);
     const [doc5, setdoc5] = useState(null);
+    const [doc1Name, setdoc1name] = useState(null);
+    const [doc2Name, setdoc2name] = useState(null);
+    const [doc3Name, setdoc3name] = useState(null);
+    const [doc4Name, setdoc4name] = useState(null);
+    const [doc5Name, setdoc5name] = useState(null);
+
     const [thumb, setThumb] = useState(null);
     const [photos, setPhotos] = useState(null);
     const [successMessage, setSuccessMessage] = useState('');
@@ -79,26 +87,29 @@ const CreatePost = () => {
     const handleChange = (e) => {
         setSuccessMessage('');
         setPost({ ...post, [e.target.id]: e.target.value });
-        console.log(e.target.id)
-        console.log(e.target.value)
     };
 
     const handleFileChange = (e) => {
         setSuccessMessage('');
         if (e.target.id === "doc1") {
             setdoc1(e.target.files[0]);
+            setdoc1name(e.target.files[0].name);
         } else if (e.target.id === "doc2") {
             setdoc2(e.target.files[0]);
+            setdoc2name(e.target.files[0].name);
         } else if (e.target.id === "doc3") {
             setdoc3(e.target.files[0]);
+            setdoc3name(e.target.files[0].name);
         } else if (e.target.id === "doc4") {
             setdoc4(e.target.files[0]);
+            setdoc4name(e.target.files[0].name);
         } else if (e.target.id === "doc5") {
             setdoc5(e.target.files[0]);
+            setdoc5name(e.target.files[0].name);
         } else if (e.target.id === "thumb") {
             setThumb(e.target.files[0]);
         } else if (e.target.id === "photos") {
-            setPhotos(e.target.files[0]);
+            setPhotos(Array.from(e.target.files));
         }
     };
 
@@ -114,11 +125,27 @@ const CreatePost = () => {
         // Special case for address
         formData.append('address', removeLastWordAndComma(address));
 
-        if (doc1) formData.append('doc1', doc1);
-        if (doc2) formData.append('doc2', doc2);
-        if (doc3) formData.append('doc3', doc3);
-        if (doc4) formData.append('doc4', doc4);
-        if (doc5) formData.append('doc5', doc5);
+        if (doc1) {
+            formData.append('doc1', doc1);
+            formData.append('doc1Name', doc1Name);
+        }
+        if (doc2) {
+            formData.append('doc2', doc2);
+            formData.append('doc2Name', doc2Name);
+        }
+        if (doc3) {
+            formData.append('doc3', doc3);
+            formData.append('doc3Name', doc3Name);
+        }
+        if (doc4) {
+            formData.append('doc4', doc4);
+            formData.append('doc4Name', doc4Name);
+        }
+        if (doc5) {
+            formData.append('doc5', doc5);
+            formData.append('doc5Name', doc5Name);
+        }
+
         if (thumb) formData.append('thumb', thumb);
         if (photos) {
             photos.forEach((photo, index) => {
@@ -163,6 +190,7 @@ const CreatePost = () => {
 
 
     let squareMeters = 'm\u00B2';
+    const [isCheckboxChecked, setCheckboxChecked] = useState(false);
 
     if (!isLoaded) return <div>Loading...</div>;
 
@@ -193,7 +221,7 @@ const CreatePost = () => {
                         </tr>
                         <tr>
                             <td className="lbl"><label htmlFor="description">Descrizione:</label></td>
-                            <td><textarea style={{ width: '100%'}} onChange={handleChange}  id="description" type="text" placeholder="..." /></td>
+                            <td><textarea style={{ width: '100%'}} onChange={handleChange}  id="description" type="text" placeholder="..." required/></td>
                             <td></td>
                         </tr>
                         <tr>
@@ -214,12 +242,25 @@ const CreatePost = () => {
                                 />
                             </Autocomplete>
                             </td>
-                            {/* <td><input className="fld" onChange={handleChange}  id="address" type="text" placeholder="Via/Piazza/Strada" /></td> */}
                         </tr>
-                        {/* <tr>
-                            <td className="lbl"><label htmlFor="floorSpace">Superficie:</label></td>
-                            <td><input className="fld" onChange={handleChange}  id="floorSpace" type="text" placeholder={squareMeters}/></td>
-                        </tr> */}
+                        {address && (
+                            <tr>
+                            <td className="lbl" style={{ display: 'flex', alignItems: 'center' }}>
+                                <label htmlFor="modifyAddress" style={{ marginRight: '0.5em' }}>Modifica indirizzo</label>
+                                <input type="checkbox" id="modifyAddress" onChange={() => {
+                                    setCheckboxChecked(!isCheckboxChecked);
+                                    if (isCheckboxChecked) {
+                                        setPost(prevPost => ({ ...prevPost, altAddress: '' }));
+                                    }
+                                }} />
+                            </td>
+                                <td>
+                                    {isCheckboxChecked && (
+                                        <input style={{ width: '100%'}} onChange={handleChange}  id="altAddress" type="text" placeholder={address ? address : "Via/Piazza/Strada"} />
+                                    )}
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

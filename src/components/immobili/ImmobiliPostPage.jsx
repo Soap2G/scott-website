@@ -103,7 +103,7 @@ const BlogPostPage = () => {
         document.body.removeChild(anchor);
         window.URL.revokeObjectURL(blobUrl);
     } catch (error) {
-        console.error('Error downloading the file:', error);
+        console.error('Error downCaricamento the file:', error);
     }
   };
 
@@ -151,86 +151,107 @@ const BlogPostPage = () => {
 
             <div className="message-title">
               <center>
-                <h1 >
-                {post ? <span className="message-title">{post.address}</span> : 'Loading...'}
+                <h1>
+                    {post ? 
+                        <span className="message-title">{post.altAddress ? post.altAddress : post.address}</span> 
+                        : 
+                        <div>
+                            Caricamento...
+                            <div className="spinner">
+                                <div className="bounce1"></div>
+                                <div className="bounce2"></div>
+                                <div className="bounce3"></div> 
+                            </div>
+                        </div>
+                    }
                 </h1>
               </center>
             </div>
             <div className="case"> 
                 <p>
-                  {post ? `${post.locali} locali | ${post.floorSpace} ${squareMeters}` : 'Loading...'}
+                  {post && post.locali ? `${post.locali} locali | ` : '' }{post && post.floorSpace ? `${post.floorSpace} ${squareMeters}` : ''}
                 </p>
             </div>
       <div className='parent-container'>
         <div className='post-page-container'>
             
-            <div className="case"
-            style={{
-              textAlign: "left"}}
-            >
-                <h2 >
-                  Descrizione
-                </h2>
-                <p>
-                  {post ? post.description : 'Loading...'}
-                </p>
-            </div>
-
-            <div className="case"
-            style={{
-              textAlign: "left",
-              marginTop: "2em"
-            }}
-            >
-                <h2 >
-                  Altre informazioni
-                </h2>
-                <p>
-                  {post ? post.other : 'Loading...'}
-                </p>
-            </div>
-
-            <hr />
-            <div className="case"
-            style={{
-              textAlign: "left",
-              marginTop: "2em"
-            }}
-            >
-                <h2 >
-                  Documentazione
-                </h2>
+        <div className="case" style={{textAlign: "left"}}>
+            <h2>Descrizione</h2>
+            <div>
+                {post ? post.description.split('\n').map((item, key) => {
+                    return <span key={key}>{item}<br/></span>
+                }) : 
                 <div>
-                {post && (
+                    Caricamento...
+                    <div className="spinner">
+                        <div className="bounce1"></div>
+                        <div className="bounce2"></div>
+                        <div className="bounce3"></div> 
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+
+            {post && post.other && (
+              <div className="case"
+              style={{
+                textAlign: "left",
+                marginTop: "2em"
+              }}
+              >
+                  <h2 >
+                    Altre informazioni
+                  </h2>
+                  <p>
+                    {post.other}
+                  </p>
+              </div>
+            )}
+
+            
+            
+            <div className="case"
+            style={{
+              textAlign: "left",
+              marginTop: "2em"
+            }}
+            >
+                <div>
+                {post && (post.doc1 || post.doc2 || post.doc3 || post.doc4 || post.doc5) && (
                           <div>
+                            <hr />
+                            <h2 >
+                              Documentazione
+                            </h2>
                             {post.doc1 && (
                             <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc1)}>
                               <span className='download-btn'> </span>
-                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc1 ? post.nameDoc1 : "Documento"}</span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc1 ? post.nameDoc1 : post.doc1Name}</span>
                             </div>
                             )}
                             {post.doc2 && (
                             <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc2)}>
                               <span className='download-btn'> </span>
-                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc2 ? post.nameDoc2 : "Documento"}</span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc2 ? post.nameDoc2 : post.doc2Name}</span>
                             </div>
                             )}
                             {post.doc3 && (
                             <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc3)}>
                               <span className='download-btn'> </span>
-                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc3 ? post.nameDoc3 : "Documento"}</span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc3 ? post.nameDoc3 : post.doc3Name}</span>
                             </div>
                             )}
                             {post.doc4 && (
                             <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc4)}>
                               <span className='download-btn'> </span>
-                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc4 ? post.nameDoc4 : "Documento"}</span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc4 ? post.nameDoc4 : post.doc4Name}</span>
                             </div>
                             )}
                             {post.doc5 && (
                             <div style={{ display: 'flex' }} onClick={() => downloadFile(post.doc5)}>
                               <span className='download-btn'> </span>
-                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc5 ? post.nameDoc5 : "Documento"}</span>
+                              <span style={{lineHeight: '2em', cursor: 'pointer'}}> {post.nameDoc5 ? post.nameDoc5 : post.doc5Name}</span>
                             </div>
                             )}
                           </div>
