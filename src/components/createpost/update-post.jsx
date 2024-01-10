@@ -18,6 +18,12 @@ const [doc2, setdoc2] = useState(null);
 const [doc3, setdoc3] = useState(null);
 const [doc4, setdoc4] = useState(null);
 const [doc5, setdoc5] = useState(null);
+const [doc1Name, setdoc1name] = useState(null);
+const [doc2Name, setdoc2name] = useState(null);
+const [doc3Name, setdoc3name] = useState(null);
+const [doc4Name, setdoc4name] = useState(null);
+const [doc5Name, setdoc5name] = useState(null);
+
 const [thumb, setThumb] = useState(null);
 const [photos, setPhotos] = useState(null);
 const [successMessage, setSuccessMessage] = useState('');
@@ -98,14 +104,19 @@ const handleFileChange = (e) => {
     setSuccessMessage('');
     if (e.target.id === "doc1") {
         setdoc1(e.target.files[0]);
+        setdoc1name(e.target.files[0].name);
     } else if (e.target.id === "doc2") {
         setdoc2(e.target.files[0]);
+        setdoc2name(e.target.files[0].name);
     } else if (e.target.id === "doc3") {
         setdoc3(e.target.files[0]);
+        setdoc3name(e.target.files[0].name);
     } else if (e.target.id === "doc4") {
         setdoc4(e.target.files[0]);
+        setdoc4name(e.target.files[0].name);
     } else if (e.target.id === "doc5") {
         setdoc5(e.target.files[0]);
+        setdoc5name(e.target.files[0].name);
     } else if (e.target.id === "thumb") {
         setThumb(e.target.files[0]);
     } else if (e.target.id === "photos") {
@@ -124,11 +135,28 @@ const handleSubmit = async (e) => {
     formData.append('coordinates', coordinates ? [coordinates.lat, coordinates.lng] : post.coordinates);
     // Special case for address
     formData.append('address', address !== '' ? removeLastWordAndComma(address) : post.address);
-    if (doc1) formData.append('doc1', doc1);
-    if (doc2) formData.append('doc2', doc2);
-    if (doc3) formData.append('doc3', doc3);
-    if (doc4) formData.append('doc4', doc4);
-    if (doc5) formData.append('doc5', doc5);
+    
+    if (doc1) {
+        formData.append('doc1', doc1);
+        formData.append('doc1Name', doc1Name);
+    }
+    if (doc2) {
+        formData.append('doc2', doc2);
+        formData.append('doc2Name', doc2Name);
+    }
+    if (doc3) {
+        formData.append('doc3', doc3);
+        formData.append('doc3Name', doc3Name);
+    }
+    if (doc4) {
+        formData.append('doc4', doc4);
+        formData.append('doc4Name', doc4Name);
+    }
+    if (doc5) {
+        formData.append('doc5', doc5);
+        formData.append('doc5Name', doc5Name);
+    }
+
     if (thumb) formData.append('thumb', thumb);
     if (photos) {
         photos.forEach((photo, index) => {
@@ -274,23 +302,23 @@ if (!isLoaded) return <div>Loading...</div>;
                 <table>
                     <tbody>
                         <tr>
-                            <td><input className="fld" onChange={handleChange}  id="nameDoc1" type="text" value={post && post.nameDoc1 ? post.nameDoc1 : ''} placeholder={post && post.nameDoc1 ? '' : 'nome doc 1'}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc1" type="text" value={post && post.nameDoc1 ? post.nameDoc1 : ''} placeholder={post && post.nameDoc1 ? '' : post.doc1Name}/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc1" type="file" /></td>
                         </tr>
                         <tr>
-                            <td><input className="fld" onChange={handleChange}  id="nameDoc2" type="text" value={post && post.nameDoc2 ? post.nameDoc2 : ''} placeholder={post && post.nameDoc2 ? '' : 'nome doc 2'}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc2" type="text" value={post && post.nameDoc2 ? post.nameDoc2 : ''} placeholder={post && post.nameDoc2 ? '' : post.doc2Name}/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc2" type="file" /></td>
                         </tr>
                         <tr>
-                            <td><input className="fld" onChange={handleChange}  id="nameDoc3" type="text" value={post && post.nameDoc3 ? post.nameDoc3 : ''} placeholder={post && post.nameDoc3 ? '' : 'nome doc 3'}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc3" type="text" value={post && post.nameDoc3 ? post.nameDoc3 : ''} placeholder={post && post.nameDoc3 ? '' : post.doc3Name}/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc3" type="file" /></td>
                         </tr>
                         <tr>
-                            <td><input className="fld" onChange={handleChange}  id="nameDoc4" type="text" value={post && post.nameDoc4 ? post.nameDoc4 : ''} placeholder={post && post.nameDoc4 ? '' : 'nome doc 4'}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc4" type="text" value={post && post.nameDoc4 ? post.nameDoc4 : ''} placeholder={post && post.nameDoc4 ? '' : post.doc4Name}/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc4" type="file" /></td>
                         </tr>
                         <tr>
-                            <td><input className="fld" onChange={handleChange}  id="nameDoc5" type="text" value={post && post.nameDoc5 ? post.nameDoc5 : ''} placeholder={post && post.nameDoc5 ? '' : 'nome doc 5'}/></td>
+                            <td><input className="fld" onChange={handleChange}  id="nameDoc5" type="text" value={post && post.nameDoc5 ? post.nameDoc5 : ''} placeholder={post && post.nameDoc5 ? '' : post.doc5Name}/></td>
                             <td><input className="fld" onChange={handleFileChange}  id="doc5" type="file" /></td>
                         </tr>
                     </tbody>

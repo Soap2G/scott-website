@@ -74,6 +74,12 @@ const CreatePost = () => {
     const [doc3, setdoc3] = useState(null);
     const [doc4, setdoc4] = useState(null);
     const [doc5, setdoc5] = useState(null);
+    const [doc1Name, setdoc1name] = useState(null);
+    const [doc2Name, setdoc2name] = useState(null);
+    const [doc3Name, setdoc3name] = useState(null);
+    const [doc4Name, setdoc4name] = useState(null);
+    const [doc5Name, setdoc5name] = useState(null);
+
     const [thumb, setThumb] = useState(null);
     const [photos, setPhotos] = useState(null);
     const [successMessage, setSuccessMessage] = useState('');
@@ -87,18 +93,23 @@ const CreatePost = () => {
         setSuccessMessage('');
         if (e.target.id === "doc1") {
             setdoc1(e.target.files[0]);
+            setdoc1name(e.target.files[0].name);
         } else if (e.target.id === "doc2") {
             setdoc2(e.target.files[0]);
+            setdoc2name(e.target.files[0].name);
         } else if (e.target.id === "doc3") {
             setdoc3(e.target.files[0]);
+            setdoc3name(e.target.files[0].name);
         } else if (e.target.id === "doc4") {
             setdoc4(e.target.files[0]);
+            setdoc4name(e.target.files[0].name);
         } else if (e.target.id === "doc5") {
             setdoc5(e.target.files[0]);
+            setdoc5name(e.target.files[0].name);
         } else if (e.target.id === "thumb") {
             setThumb(e.target.files[0]);
         } else if (e.target.id === "photos") {
-            setPhotos(e.target.files[0]);
+            setPhotos(Array.from(e.target.files));
         }
     };
 
@@ -114,12 +125,27 @@ const CreatePost = () => {
         // Special case for address
         formData.append('address', removeLastWordAndComma(address));
 
+        if (doc1) {
+            formData.append('doc1', doc1);
+            formData.append('doc1Name', doc1Name);
+        }
+        if (doc2) {
+            formData.append('doc2', doc2);
+            formData.append('doc2Name', doc2Name);
+        }
+        if (doc3) {
+            formData.append('doc3', doc3);
+            formData.append('doc3Name', doc3Name);
+        }
+        if (doc4) {
+            formData.append('doc4', doc4);
+            formData.append('doc4Name', doc4Name);
+        }
+        if (doc5) {
+            formData.append('doc5', doc5);
+            formData.append('doc5Name', doc5Name);
+        }
 
-        if (doc1) formData.append('doc1', doc1);
-        if (doc2) formData.append('doc2', doc2);
-        if (doc3) formData.append('doc3', doc3);
-        if (doc4) formData.append('doc4', doc4);
-        if (doc5) formData.append('doc5', doc5);
         if (thumb) formData.append('thumb', thumb);
         if (photos) {
             photos.forEach((photo, index) => {
