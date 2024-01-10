@@ -151,8 +151,19 @@ const BlogPostPage = () => {
 
             <div className="message-title">
               <center>
-                <h1 >
-                {post ? <span className="message-title">{post.altAddress ? post.altAddress : post.address}</span> : 'Caricamento...'}
+                <h1>
+                    {post ? 
+                        <span className="message-title">{post.altAddress ? post.altAddress : post.address}</span> 
+                        : 
+                        <div>
+                            Caricamento...
+                            <div className="spinner">
+                                <div className="bounce1"></div>
+                                <div className="bounce2"></div>
+                                <div className="bounce3"></div> 
+                            </div>
+                        </div>
+                    }
                 </h1>
               </center>
             </div>
@@ -164,18 +175,22 @@ const BlogPostPage = () => {
       <div className='parent-container'>
         <div className='post-page-container'>
             
-        <div className="case"
-            style={{
-                textAlign: "left"}}
-            >
-            <h2>
-                Descrizione
-            </h2>
-            <p>
+        <div className="case" style={{textAlign: "left"}}>
+            <h2>Descrizione</h2>
+            <div>
                 {post ? post.description.split('\n').map((item, key) => {
                     return <span key={key}>{item}<br/></span>
-                }) : 'Caricamento...'}
-            </p>
+                }) : 
+                <div>
+                    Caricamento...
+                    <div className="spinner">
+                        <div className="bounce1"></div>
+                        <div className="bounce2"></div>
+                        <div className="bounce3"></div> 
+                    </div>
+                </div>
+                }
+            </div>
         </div>
 
             {post && post.other && (
