@@ -36,11 +36,11 @@ const Header = ({ theme, setTheme }) => {
       <div className="header-logo">
       <Link
           className="nav-link active"
-          style={{ color: 'var(--text-color)'}}
+          style={{ color: 'var(--title-color)'}}
           aria-current="page"
           to="/"
         >
-          Scott SRL
+          SCOTT s.r.l.
         </Link>
       </div>
       <div className="header-nav">

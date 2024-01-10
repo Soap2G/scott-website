@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,200;0,300;0,400;0,600;1,200;1,300;1,400;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600&family=Tilt+Warp&display=swap');
 
 h1, body, html, ::placeholder, input, textarea {
     /* font-family: 'Averia Serif Libre', serif; */
@@ -60,11 +60,12 @@ h1, body, html, ::placeholder, input, textarea {
 .intro-title {
         display: flex;
         flex: 1;
-        font-size: 3.5rem;
+        font-size: 4rem;
         text-align: center;
         justify-content: center;
-        /* margin-top: -40vh; */
+        font-weight: 700;
         position: static;
+        color: var(--color-title);
 }
 
 .intro-title img {

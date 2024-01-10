@@ -87,13 +87,13 @@ exports.handler = async (event) => {
                             const fileUrl = (await uploadedFile[0].getSignedUrl({ action: 'read', expires: '03-09-2491' }))[0];
                             // console.log(fileUrl)
                             if (fieldname.startsWith('photo')) {
-                                if (!updateData.photos) {
-                                  updateData.photos = [];
+                                if (!Array.isArray(updateData.photos)) {
+                                    updateData.photos = [];
                                 }
                                 updateData.photos.push(fileUrl);
-                              } else {
+                            } else {
                                 updateData[fieldname] = fileUrl;
-                              }
+                            }
                             resolve();
                         } catch (error) {
                             reject(error);
@@ -156,13 +156,13 @@ exports.handler = async (event) => {
                         });
                         const fileUrl = (await uploadedFile[0].getSignedUrl({ action: 'read', expires: '03-09-2491' }))[0];
                         if (fieldname.startsWith('photo')) {
-                            if (!postData.photos) {
+                            if (!Array.isArray(postData.photos)) {
                                 postData.photos = [];
                             }
                             postData.photos.push(fileUrl);
-                            } else {
-                                postData[fieldname] = fileUrl;
-                            }
+                        } else {
+                            postData[fieldname] = fileUrl;
+                        }
                         resolve();
                     });
                     writeStream.on('error', reject);
