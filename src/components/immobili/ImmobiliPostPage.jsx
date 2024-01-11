@@ -8,6 +8,10 @@ import marker from '../../assets/marker.png'
 import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useAuth } from '../../components/auth/AuthContext'; // Import your AuthContext
+import { Link } from 'react-router-dom';
+
+
 
 class SimpleSlider extends Component {
   
@@ -68,6 +72,8 @@ const BlogPostPage = () => {
   let squareMeters = 'm\u00B2';
   const [post, setPost] = useState(null);
   const [listingsData, setListingsData] = useState([]);
+  const { currentUser } = useAuth();
+
 
   const myIcon = L.icon({
     iconUrl: marker,
@@ -172,6 +178,18 @@ const BlogPostPage = () => {
                   {post && post.locali ? `${post.locali} locali | ` : '' }{post && post.floorSpace ? `${post.floorSpace} ${squareMeters}` : ''}
                 </p>
             </div>
+            {currentUser && post ? (
+                  <div
+                  style={{marginTop: '2em'}}
+                  >
+                    <Link to={`/modifica/${post.id}`}
+                    >
+                        <span className="dettagli-button" id='editButton' style={{ padding: '1em' }}>
+                            MODIFICA
+                        </span>
+                    </Link>
+                  </div>
+                ): ''}
       <div className='parent-container'>
         <div className='post-page-container'>
             
@@ -261,14 +279,32 @@ const BlogPostPage = () => {
         </div>
         <div className='map-immobile'>
         {post && (
-          <MapContainer center={[post.coordinates.split(',')[0], post.coordinates.split(',')[1]]} zoom={16} style={{ height: "100%" }}>
+          // <MapContainer center={[post.coordinates.split(',')[0], post.coordinates.split(',')[1]]} zoom={16} style={{ height: "100%" }}>
+          //   <TileLayer
+          //     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          //     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          //   />
+          //   <Marker position={[post.coordinates.split(',')[0], post.coordinates.split(',')[1]]} icon={myIcon}>
+          //     <Popup>
+          //     {post.address}
+          //     </Popup>
+          //   </Marker>
+          // </MapContainer>
+          <MapContainer 
+            center={[post.coordinates.split(',')[0], post.coordinates.split(',')[1]]} 
+            zoom={16} 
+            style={{ height: "100%" }}
+            touchZoom={true}
+            dragging={false}
+            tap={false}
+          >
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             />
             <Marker position={[post.coordinates.split(',')[0], post.coordinates.split(',')[1]]} icon={myIcon}>
               <Popup>
-              {post.address}
+                {post.address}
               </Popup>
             </Marker>
           </MapContainer>

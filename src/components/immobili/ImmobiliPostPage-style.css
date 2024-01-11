@@ -1,3 +1,9 @@
+#editButton:hover {
+  background-color: var(--color-title);
+  color: white;
+  transition: 200ms ease-in;
+}
+
 .parent-container {
   padding: 3em;
   display: flex;
