@@ -6,6 +6,7 @@ import { useLoadScript, Autocomplete } from '@react-google-maps/api';
 const libraries = ["places"];
 
 const UpdatePost = () => {
+
 // Find id of the db entry
 let { updateSlug } = useParams();
 const [listingsData, setListingsData] = useState([]);
@@ -13,6 +14,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
 
 const [post, setPost] = useState('');
 
+/* eslint-disable */
 const [doc1, setdoc1] = useState(null);
 const [doc2, setdoc2] = useState(null);
 const [doc3, setdoc3] = useState(null);
@@ -23,9 +25,10 @@ const [doc2Name, setdoc2name] = useState(null);
 const [doc3Name, setdoc3name] = useState(null);
 const [doc4Name, setdoc4name] = useState(null);
 const [doc5Name, setdoc5name] = useState(null);
-
 const [thumb, setThumb] = useState(null);
 const [photos, setPhotos] = useState(null);
+const [newPhotos, setNewPhotos] = useState(null);
+/* eslint-enable */
 const [successMessage, setSuccessMessage] = useState('');
 
 useEffect(() => {
@@ -38,7 +41,7 @@ useEffect(() => {
     fetchListings();
     }, []);
 
-    useEffect(() => {
+useEffect(() => {
     // eslint-disable-next-line
     let foundPost = listingsData.find(listing => listing.id === updateSlug);
     setPost(foundPost);
@@ -53,7 +56,7 @@ function removeLastWordAndComma(address) {
         }
         return address; // Return the original address if there's no comma
     } catch {
-        console.log('Error in removeLastWordAndComma');
+        // console.log('Error in removeLastWordAndComma');
     }
 }    
 
@@ -80,91 +83,145 @@ const onPlaceChanged = () => {
                 lng: place.geometry.location.lng()
             };
             setCoordinates(coordinates); // Assuming you have a state [coordinates, setCoordinates]
-            
-            // this.setState(prevState => ({
-            //     post: {
-            //       ...prevState.post,
-            //       address: address,
-            //       coord: coordinates
-            //     }
-            //   }));
         }
     } catch {
-        console.log('Error in onPlaceChanged');
+        // console.log('Error in onPlaceChanged');
     }
 };
 
+// Manage imges
+const [selectedPhotos, setSelectedPhotos] = useState([]);
 
+const togglePhotoSelection = (photo) => {
+  if (selectedPhotos.includes(photo)) {
+    setSelectedPhotos(selectedPhotos.filter(p => p !== photo));
+  } else {
+    setSelectedPhotos([...selectedPhotos, photo]);
+  }
+};
+
+const removeSelectedPhotos = () => {
+  if (post && post.photos) {
+    const newPhotos = post.photos.filter(photo => !selectedPhotos.includes(photo));
+    const removePhotos = post.photos.filter(photo => selectedPhotos.includes(photo));
+
+    setNewPhotos(newPhotos)
+    setPost({ ...post, 'removePhotos': removePhotos });
+  }
+};
+
+// File and field changes
 const handleChange = (e) => {
     setSuccessMessage('');
     setPost({ ...post, [e.target.id]: e.target.value });
 };
 
+const stateVars = {
+    doc1: doc1,
+    doc2: doc2,
+    doc3: doc3,
+    doc4: doc4,
+    doc5: doc5
+  };
+
 const handleFileChange = (e) => {
     setSuccessMessage('');
-    if (e.target.id === "doc1") {
-        setdoc1(e.target.files[0]);
-        setdoc1name(e.target.files[0].name);
-    } else if (e.target.id === "doc2") {
-        setdoc2(e.target.files[0]);
-        setdoc2name(e.target.files[0].name);
-    } else if (e.target.id === "doc3") {
-        setdoc3(e.target.files[0]);
-        setdoc3name(e.target.files[0].name);
-    } else if (e.target.id === "doc4") {
-        setdoc4(e.target.files[0]);
-        setdoc4name(e.target.files[0].name);
-    } else if (e.target.id === "doc5") {
-        setdoc5(e.target.files[0]);
-        setdoc5name(e.target.files[0].name);
-    } else if (e.target.id === "thumb") {
+    const file = e.target.files[0];
+    const id = e.target.id;
+    const setters = {
+        doc1: [setdoc1, setdoc1name],
+        doc2: [setdoc2, setdoc2name],
+        doc3: [setdoc3, setdoc3name],
+        doc4: [setdoc4, setdoc4name],
+        doc5: [setdoc5, setdoc5name],
+        thumb: [setThumb],
+        photos: [setPhotos]
+      };
+
+    if (e.target.id === "thumb") {
         setThumb(e.target.files[0]);
     } else if (e.target.id === "photos") {
         setPhotos(Array.from(e.target.files));
+    } else {
+        setters[id][0](file);
+        setters[id][1](file.name);
     }
 };
+
+// const handleFileChange = (e) => {
+//     setSuccessMessage('');
+//     const file = e.target.files[0];
+//     const id = e.target.id;
+  
+//     const setters = {
+//       doc1: [setdoc1, setdoc1name],
+//       doc2: [setdoc2, setdoc2name],
+//       doc3: [setdoc3, setdoc3name],
+//       doc4: [setdoc4, setdoc4name],
+//       doc5: [setdoc5, setdoc5name],
+//       thumb: [setThumb],
+//       photos: [setPhotos, () => Array.from(e.target.files)]
+//     };
+  
+//     if (setters[id]) {
+//       setters[id][0](setters[id][1] ? setters[id][1]() : file);
+//     }
+//   };
 
 const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     const formData = new FormData();
-    for (let key in post) {
-        formData.append(key, post[key]);
+    // Loop over updated docs
+    for (let entry in stateVars){
+        if (stateVars[entry]){
+            formData.append(entry, stateVars[entry]);
+            formData.append(`${entry}Name`, stateVars[entry].name);
+        }
     }
-    // Special case for coordinates
-    formData.append('coordinates', coordinates ? [coordinates.lat, coordinates.lng] : post.coordinates);
-    // Special case for address
-    formData.append('address', address !== '' ? removeLastWordAndComma(address) : post.address);
-    
-    if (doc1) {
-        formData.append('doc1', doc1);
-        formData.append('doc1Name', doc1Name);
-    }
-    if (doc2) {
-        formData.append('doc2', doc2);
-        formData.append('doc2Name', doc2Name);
-    }
-    if (doc3) {
-        formData.append('doc3', doc3);
-        formData.append('doc3Name', doc3Name);
-    }
-    if (doc4) {
-        formData.append('doc4', doc4);
-        formData.append('doc4Name', doc4Name);
-    }
-    if (doc5) {
-        formData.append('doc5', doc5);
-        formData.append('doc5Name', doc5Name);
-    }
+    // Loop over everythin else
+    for (let key in post) {      
+        // Special case for coordinates
+        if (key === 'coordinates') {
+        formData.append('coordinates', coordinates ? [coordinates.lat, coordinates.lng] : post.coordinates);
+        } else if (key === 'address') {
+            // Special case for address
+            formData.append('address', address !== '' ? removeLastWordAndComma(address) : post.address);
+        }
+        else if (key in stateVars) {
+            continue
+          } else if (key === 'thumb') {
+            if (thumb) {
+              formData.append('thumb', thumb);
+            }
+          } else if (key === 'photos') {
+            try {
+                post.photos = post.photos.filter(photo => newPhotos.includes(photo));
+                newPhotos.forEach((photo, index) => {
+                formData.append(`photo${index}`, photo);
+                });
+            } catch {
+                    // console.log('Error in photos.forEach');
 
+            }
+          } else if (key === 'removePhotos') {
+            try {
+                post.removePhotos.forEach((photo, index) => {
+                formData.append(`removephoto${index}`, photo);
+                });
+            } catch {
+                    // console.log('Error in photos.forEach');
+            }
+          } else {
+            formData.append(key, post[key]);
+        }
+    }
     if (thumb) formData.append('thumb', thumb);
     if (photos) {
         photos.forEach((photo, index) => {
-          formData.append(`photo${index}`, photo);
+            formData.append(`photoFile${index}`, photo);
         });
-      }
-
-    // console.log(formData)
+        }
 
     try {
         const response = await fetch(`/.netlify/functions/createPost/${post.id}`, {
@@ -173,7 +230,7 @@ const handleSubmit = async (e) => {
         });
 
         if (response.ok) {
-            console.log('Post created successfully');
+            // console.log('Post created successfully');
             setSuccessMessage('Immobile aggiornato correttamente');
             // Reset form values
             setPost(prevPost => {
@@ -359,6 +416,32 @@ if (!isLoaded) return <div>Loading...</div>;
                             <td className="lbl"><label htmlFor="map">Altre foto:</label></td>
                             <td><input className="fld" onChange={handleFileChange}  id="photos" type="file" multiple/></td>
                         </tr>
+                        
+                        
+                        <tr>
+                        {(newPhotos && newPhotos.length > 0) || (!newPhotos && post && post.photos && post.photos.length > 0) ? (
+                        <td 
+                            className={`lbl ${selectedPhotos.length === 0 ? 'disabled' : ''}`}
+                            id='remove-image-btn' 
+                            onClick={selectedPhotos.length > 0 ? removeSelectedPhotos : null}
+                        >
+                            <span>Elimina foto</span> 
+                        </td>
+                        ) : ''}                         
+                        <td>
+                        {(post && Array.isArray(post.photos)) && 
+                        (newPhotos ? newPhotos : post.photos).map((photo, index) => (
+                            <span
+                            className={`gallery-image-name ${selectedPhotos.includes(photo) ? 'selected' : ''}`}
+                            key={index}
+                            onClick={() => togglePhotoSelection(photo)}
+                            >
+                            {photo && typeof photo === 'string' ? photo.split('?')[0].split('/').pop() : ''}
+                            </span>
+                        ))}
+                        </td>
+                        </tr>
+                        
                         <tr>
                             <td className="lbl"><label htmlFor="map">Link video:</label></td>
                             <td><input className="fld" onChange={handleChange}  id="video" type="text" value={post && post.video ? post.video : ''} placeholder={post && post.video ? '' : '...'}/></td>

@@ -33,7 +33,7 @@ exports.handler = async (event) => {
         const snapshot = await db.collection('posts').get();
         const data = await Promise.all(snapshot.docs.map(async doc => {
             const postData = doc.data();
-            const fileFields = ['thumb', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5', 'photos'];
+            const fileFields = ['thumb', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5', 'photos', 'removephoto' ];
             await Promise.all(fileFields.map(async field => {
                 if (postData[field]) {
                   if (field === 'photos' && Array.isArray(postData[field])) {
@@ -60,6 +60,8 @@ exports.handler = async (event) => {
             let updateData = {};
             let fileWrites = [];
             let fieldWrites = [];
+            let photosToRemove = [];
+
             const id = event.path.split('/').pop(); // Assuming the ID is the last part of the path
             const docRef = db.collection('posts').doc(id);
 
@@ -104,9 +106,31 @@ exports.handler = async (event) => {
             });
     
             busboy.on('field', (fieldname, val) => {
-                fieldWrites.push(new Promise((resolve, reject) => {
+                fieldWrites.push(new Promise( (resolve, reject) => {
                     try {
+                        if (fieldname.startsWith('photo')) {
+                            if (!Array.isArray(updateData.photos)) {
+                                updateData.photos = [];
+                            }
+                            updateData.photos.push(val);
+                            // console.log('Updated photos: ', updateData.photos)
+                        } else if (fieldname.startsWith('remove')) {
+                            // Assuming `storage` is your Firebase Storage instance
+                            const url = new URL(val);
+                            let pathParts = decodeURIComponent(url.pathname).split('/');
+                            // Remove the first two parts (empty string and bucket name)
+                            pathParts = pathParts.slice(2);
+                            const filePath = pathParts.join('/');
+                            var photoRef = storage.file(filePath);
+                            photoRef.delete().then(() => {
+
+                              }).catch((error) => {
+                                // console.log('Error while deleting the file: ', error);
+                              });
+                        } else {
                         updateData[fieldname] = val;
+                            
+                        }
                         resolve();
                     } catch (error) {
                         reject(error);
@@ -122,6 +146,10 @@ exports.handler = async (event) => {
                             reject({ statusCode: 500, body: `Error processing request: ${error.message}` });
                             return;
                         });
+                    // Remove the photos in photosToRemove from updateData.photos
+                    if (!Array.isArray(updateData.photos)) {
+                        updateData.photos = [];
+                    }
                     await docRef.update(updateData);
                     resolve({ statusCode: 200, body: JSON.stringify({ id: id, ...updateData }) });
                 } catch (error) {

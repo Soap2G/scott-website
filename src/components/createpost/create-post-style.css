@@ -1,3 +1,35 @@
+
+#remove-image-btn {
+    border: 1px solid;
+    border-radius: 5px;
+    margin: 0.3em;
+    padding: 0.3em;
+    text-align: center; 
+    background-color: var(--feel-color);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#remove-image-btn.lbl.disabled {
+    background: #ffa0a0; /* Change this to the desired background color */
+    cursor: not-allowed;
+}
+
+.gallery-image-name {
+    border: 1px solid;
+    border-radius: 5px;
+    margin: 0.3em;
+    padding: 0.3em;
+    text-align: center;
+    cursor: pointer;
+}
+
+.gallery-image-name.selected {
+    background-color: var(--color-title);
+    color: white;
+}
+
 #modifyAddress {
     width: 25px;
 }
